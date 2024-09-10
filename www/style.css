@@ -1,0 +1,292 @@
+/* Set customizable colors */
+:root {
+  /* Images/ Logos*/
+  --img1: url("army.png");
+  --content-bg-color: #F2F2F2; 
+  --header-bg-color: DarkSlateGray; 
+  --main-text-color: black;
+  --alt-text-color: White;
+  --header-text-color: White;
+  --nav-bd-color: black;
+  --font: "Bahnschrift", Times, serif;
+  
+  --sidebar-bg-color: #262626; /* Dark Grey*/
+  --sidebar-hover-color: #F2F2F2; /*  Light Grey */
+  --sidebar-active-color:Teal; 
+  --sidebar-text-color: White;
+}
+
+
+.shiny-input-container {
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+  border: 0px 0px 0px 0px;
+}
+
+.control-label {
+  padding: 5px 0px 0px 0px;
+  margin: 3px 0px 0px 0px;
+  border: 3px 0px 0px 0px;
+}
+
+/* Header Style */
+
+.main-header {
+  max-height: 100px;
+  height: 75px;
+        
+  /* Title Style */
+  color: var(--header-text-color);
+  background-color: var(--header-bg-color);
+  font-family: var(--font);
+  padding-top: 30px;
+  text-indent: 0px;
+  font-size: 30px;
+  
+  /* Adding Logos 
+  padding-left: 90px;
+  padding-top: 10px;
+  background-image: var(--img1); 
+  background-repeat:no-repeat;
+  background-size: 45px;
+  background-position-x:  5px;
+  background-position-y: 10px;
+  background-color: var(--header-bg-color); */
+  
+}
+
+/* Set Body Style 
+.wrapper{
+  position:relative; /* absolute 
+}
+*/
+
+/*
+.content-wrapper, .right-side {
+    background-color: var(--content-bg-color);
+}
+*/
+
+/*  These cause issues with the cards
+.content-wrapper, .right-side {
+    min-height: 100%;
+    background-color: var(--content-bg-color);
+    margin-left:180px;
+    min-width: 100%;
+}
+
+
+.container-fluid {
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: 10px;
+    margin-left: auto;
+}
+
+.content {
+    min-height: 130px;
+    padding-top: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 35px; /* padding to ensure full slider bar veiw
+    padding-right: 5px;
+    font-family: var(--font);
+}
+
+*/
+/* Tabs */
+a {
+    color: var(--main-text-color);
+}
+
+.nav-tabs {
+    border-bottom: 1px solid var(--nav-bd-color);
+}
+
+.nav-tabs>li>a:hover {
+    border-bottom: 1px solid var(--nav-bd-color);
+    color: var(--content-bg-color);
+    background-color: var(--sidebar-bg-color);
+    border-color: var(--nav-bd-color);
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: var(--main-text-color); 
+    cursor: default;
+    background-color: var(--content-bg-color);
+    border: 1px solid var(--nav-bd-color);
+    border-bottom-color: var(--nav-bd-color);
+}
+
+/* Side bar */
+.sidebar {
+    color: var(--sidebar-text-color);
+    position: relative;
+    /*top: 100px;*/
+    left: 0;
+    padding-top: 10px;
+    min-height: 100%;
+    width: 250px;
+    z-index: 810;
+    overflow:auto;
+    background-color: var(--sidebar-bg-color);
+    
+    /* Code to put logos in the side panel */
+    background-image: var(--img1); 
+    background-repeat:no-repeat;
+    background-size: 110px;
+    background-position-x: 70px;
+    background-position-y: 20px;
+    
+    padding-top: 175px;
+    
+    -webkit-transition: -webkit-transform .3s ease-in-out,width .3s ease-in-out;
+    -moz-transition: -moz-transform .3s ease-in-out,width .3s ease-in-out;
+    -o-transition: -o-transform .3s ease-in-out,width .3s ease-in-out;
+    transition: transform .3s ease-in-out,width .3s ease-in-out;
+}
+.sidebar .background {
+    width:200px;
+    height:300px;
+}
+
+.sidebar a{
+  width: 230px;
+  background-color: var(--sidebar-bg-color);
+  color: White;
+}
+
+.sidebar .nav-sidebar>.nav-item>.nav-link.active {
+    background-color: var(--sidebar-active-color);
+    color: White;
+    border:1px solid black;
+}
+
+.sidebar .nav-sidebar>.nav-item>.nav-link:not(active) {
+    background-color: var(---sidebar-bg-color);
+    color: White;
+}
+
+.sidebar .nav-sidebar>.nav-item> a:hover:not(.active){
+  color: Black;
+  background-color: var(--sidebar-hover-color);
+  border:1px solid black;
+}
+
+/* Set Up Modal CSS Options (/
+)
+/* Create Modal Width for Large modalBS */
+@media (min-width:1700px){.modal-lg,.modal-xl{max-width:1600px}}
+
+
+/* Info Boxes */
+
+.info-box .info-box-content {
+    line-height: 1.15;
+}
+
+
+.info-box:hover {
+    color: White;
+    background-color: #63b3b3 !important;
+}
+
+
+/* Title Size Adjustment */
+@media (max-width: 1400px) {
+.h1, h1 {
+    font-size: 2rem;
+}
+}
+
+@media (max-width: 1050px) {
+.h1, h1 {
+    font-size: 1.4rem;
+}
+}
+
+@media (max-width: 700px) {
+.h1, h1 {
+    font-size: 1.3rem;
+}
+}
+
+[title]::before {
+  display: none;
+}
+
+p {
+padding: 0; 
+margin: 0;
+}
+h4 {
+padding: 0; 
+margin: 0;
+}
+h5 {
+  font-weight: bold;
+  color: red;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 15px;
+}
+h6 {
+  font-weight: bold;
+  color: green;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+hr {
+border: 0;
+display:block;
+width: 96%;               
+background-color:#767676;
+height: 1px;
+}
+  .blue-button-big {
+background-color: #309EF9;
+color: white;
+font-size: 200%;
+}
+  .blue-button-big:hover {
+background-color: #267EC7;
+border-color: #184F7C;
+color: white;
+font-size: 400%;
+}
+  .blue-button {
+background-color: #309EF9;
+color: white;
+}
+.blue-button:hover {
+background-color: #1182DF;
+color: white;
+font-weight: bold;
+}
+.red-button {
+background-color: #EB4D3B;
+color: white;
+}
+.red-button:hover {
+background-color: #CB3E2E;
+color: white;
+font-weight: bold;
+}
+.blue-button {
+background-color: #309EF9;
+color: white;
+}
+.blue-button:hover {
+background-color: #1182DF;
+color: white;
+font-weight: bold;
+}
+.red-button {
+background-color: #EB4D3B;
+color: white;
+}
+.red-button:hover {
+background-color: #CB3E2E;
+color: white;
+font-weight: bold;
+}

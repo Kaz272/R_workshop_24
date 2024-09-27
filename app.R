@@ -58,6 +58,10 @@ ui <- dashboardPage(
 # Server ==================================
 server <- function(input, output, session) {
   
+  dashboard_server("dashboard")
+  crud_server("crud")
+  calendar_server("calendar")
+  
   ## Menu -----------------------
   output$menu <- renderMenu({
     

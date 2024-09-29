@@ -5,81 +5,81 @@ team_id,team_name,color,team_logo_filename,stat_name,stat_display_name,stat_desc
 3,Dallas Wings,002b5c,www/team/3.png,fieldGoalPct,Field Goal Percentage,The ratio of field goals made to field goals attempted: FGM / FGA,44.389,5,Offensive,5th,#002b5c,4
 3,Dallas Wings,002b5c,www/team/3.png,freeThrowPct,Free Throw Percentage,The ratio of free throws made to free throws attempted: FTM / FTA,78.552,6,Offensive,6th,#002b5c,4
 3,Dallas Wings,002b5c,www/team/3.png,points,Points,The number of points scored.,3368,4,Offensive,4th,#002b5c,4
-3,Dallas Wings,002b5c,www/team/3.png,avgPoints,Points Per Game,The average number of points scored per game.,84.2,NA,Offensive,NA,#002b5c,4
+3,Dallas Wings,002b5c,www/team/3.png,avgPoints,Points Per Game,The average number of points scored per game.,84.2,,Offensive,,#002b5c,4
 5,Indiana Fever,002d62,www/team/5.png,blocks,Blocks,"Short for blocked shot, number of times when a defensive player legally deflects a field goal attempt from an offensive player.",173,5,Defensive,5th,#002d62,3
 5,Indiana Fever,002d62,www/team/5.png,steals,Steals,The number of times a defensive player forced a turnover by intercepting or deflecting a pass or a dribble of an offensive player.,235,12,Defensive,12th,#002d62,3
 5,Indiana Fever,002d62,www/team/5.png,totalRebounds,Rebounds,The total number of rebounds for a team or player,1402,12,General,12th,#002d62,3
 5,Indiana Fever,002d62,www/team/5.png,fieldGoalPct,Field Goal Percentage,The ratio of field goals made to field goals attempted: FGM / FGA,45.375,1,Offensive,1st,#002d62,3
 5,Indiana Fever,002d62,www/team/5.png,freeThrowPct,Free Throw Percentage,The ratio of free throws made to free throws attempted: FTM / FTA,77.518,7,Offensive,7th,#002d62,3
 5,Indiana Fever,002d62,www/team/5.png,points,Points,The number of points scored.,3399,3,Offensive,3rd,#002d62,3
-5,Indiana Fever,002d62,www/team/5.png,avgPoints,Points Per Game,The average number of points scored per game.,84.975,NA,Offensive,NA,#002d62,3
+5,Indiana Fever,002d62,www/team/5.png,avgPoints,Points Per Game,The average number of points scored per game.,84.975,,Offensive,,#002d62,3
 6,Los Angeles Sparks,552583,www/team/6.png,blocks,Blocks,"Short for blocked shot, number of times when a defensive player legally deflects a field goal attempt from an offensive player.",129,12,Defensive,12th,#552583,10
 6,Los Angeles Sparks,552583,www/team/6.png,steals,Steals,The number of times a defensive player forced a turnover by intercepting or deflecting a pass or a dribble of an offensive player.,292,5,Defensive,5th,#552583,10
 6,Los Angeles Sparks,552583,www/team/6.png,totalRebounds,Rebounds,The total number of rebounds for a team or player,1307,18,General,18th,#552583,10
 6,Los Angeles Sparks,552583,www/team/6.png,fieldGoalPct,Field Goal Percentage,The ratio of field goals made to field goals attempted: FGM / FGA,42.335,10,Offensive,10th,#552583,10
 6,Los Angeles Sparks,552583,www/team/6.png,freeThrowPct,Free Throw Percentage,The ratio of free throws made to free throws attempted: FTM / FTA,76.501,10,Offensive,10th,#552583,10
 6,Los Angeles Sparks,552583,www/team/6.png,points,Points,The number of points scored.,3136,10,Offensive,10th,#552583,10
-6,Los Angeles Sparks,552583,www/team/6.png,avgPoints,Points Per Game,The average number of points scored per game.,78.4,NA,Offensive,NA,#552583,10
+6,Los Angeles Sparks,552583,www/team/6.png,avgPoints,Points Per Game,The average number of points scored per game.,78.4,,Offensive,,#552583,10
 8,Minnesota Lynx,266092,www/team/8.png,blocks,Blocks,"Short for blocked shot, number of times when a defensive player legally deflects a field goal attempt from an offensive player.",168,6,Defensive,6th,#266092,6
 8,Minnesota Lynx,266092,www/team/8.png,steals,Steals,The number of times a defensive player forced a turnover by intercepting or deflecting a pass or a dribble of an offensive player.,343,2,Defensive,2nd,#266092,6
 8,Minnesota Lynx,266092,www/team/8.png,totalRebounds,Rebounds,The total number of rebounds for a team or player,1370,12,General,12th,#266092,6
 8,Minnesota Lynx,266092,www/team/8.png,fieldGoalPct,Field Goal Percentage,The ratio of field goals made to field goals attempted: FGM / FGA,44.762,3,Offensive,3rd,#266092,6
 8,Minnesota Lynx,266092,www/team/8.png,freeThrowPct,Free Throw Percentage,The ratio of free throws made to free throws attempted: FTM / FTA,78.998,5,Offensive,5th,#266092,6
 8,Minnesota Lynx,266092,www/team/8.png,points,Points,The number of points scored.,3279,6,Offensive,6th,#266092,6
-8,Minnesota Lynx,266092,www/team/8.png,avgPoints,Points Per Game,The average number of points scored per game.,81.975,NA,Offensive,NA,#266092,6
+8,Minnesota Lynx,266092,www/team/8.png,avgPoints,Points Per Game,The average number of points scored per game.,81.975,,Offensive,,#266092,6
 9,New York Liberty,86cebc,www/team/9.png,blocks,Blocks,"Short for blocked shot, number of times when a defensive player legally deflects a field goal attempt from an offensive player.",179,4,Defensive,4th,#86cebc,2
 9,New York Liberty,86cebc,www/team/9.png,steals,Steals,The number of times a defensive player forced a turnover by intercepting or deflecting a pass or a dribble of an offensive player.,316,4,Defensive,4th,#86cebc,2
 9,New York Liberty,86cebc,www/team/9.png,totalRebounds,Rebounds,The total number of rebounds for a team or player,1463,7,General,7th,#86cebc,2
 9,New York Liberty,86cebc,www/team/9.png,fieldGoalPct,Field Goal Percentage,The ratio of field goals made to field goals attempted: FGM / FGA,44.481,4,Offensive,4th,#86cebc,2
 9,New York Liberty,86cebc,www/team/9.png,freeThrowPct,Free Throw Percentage,The ratio of free throws made to free throws attempted: FTM / FTA,81.368,3,Offensive,3rd,#86cebc,2
 9,New York Liberty,86cebc,www/team/9.png,points,Points,The number of points scored.,3424,2,Offensive,2nd,#86cebc,2
-9,New York Liberty,86cebc,www/team/9.png,avgPoints,Points Per Game,The average number of points scored per game.,85.6,NA,Offensive,NA,#86cebc,2
+9,New York Liberty,86cebc,www/team/9.png,avgPoints,Points Per Game,The average number of points scored per game.,85.6,,Offensive,,#86cebc,2
 11,Phoenix Mercury,3c286e,www/team/11.png,blocks,Blocks,"Short for blocked shot, number of times when a defensive player legally deflects a field goal attempt from an offensive player.",189,3,Defensive,3rd,#3c286e,7
 11,Phoenix Mercury,3c286e,www/team/11.png,steals,Steals,The number of times a defensive player forced a turnover by intercepting or deflecting a pass or a dribble of an offensive player.,264,11,Defensive,11th,#3c286e,7
 11,Phoenix Mercury,3c286e,www/team/11.png,totalRebounds,Rebounds,The total number of rebounds for a team or player,1293,19,General,19th,#3c286e,7
 11,Phoenix Mercury,3c286e,www/team/11.png,fieldGoalPct,Field Goal Percentage,The ratio of field goals made to field goals attempted: FGM / FGA,43.676,6,Offensive,6th,#3c286e,7
 11,Phoenix Mercury,3c286e,www/team/11.png,freeThrowPct,Free Throw Percentage,The ratio of free throws made to free throws attempted: FTM / FTA,79.919,4,Offensive,4th,#3c286e,7
 11,Phoenix Mercury,3c286e,www/team/11.png,points,Points,The number of points scored.,3258,7,Offensive,7th,#3c286e,7
-11,Phoenix Mercury,3c286e,www/team/11.png,avgPoints,Points Per Game,The average number of points scored per game.,81.45,NA,Offensive,NA,#3c286e,7
+11,Phoenix Mercury,3c286e,www/team/11.png,avgPoints,Points Per Game,The average number of points scored per game.,81.45,,Offensive,,#3c286e,7
 14,Seattle Storm,2c5235,www/team/14.png,blocks,Blocks,"Short for blocked shot, number of times when a defensive player legally deflects a field goal attempt from an offensive player.",206,1,Defensive,1st,#2c5235,5
 14,Seattle Storm,2c5235,www/team/14.png,steals,Steals,The number of times a defensive player forced a turnover by intercepting or deflecting a pass or a dribble of an offensive player.,372,1,Defensive,1st,#2c5235,5
 14,Seattle Storm,2c5235,www/team/14.png,totalRebounds,Rebounds,The total number of rebounds for a team or player,1386,10,General,10th,#2c5235,5
 14,Seattle Storm,2c5235,www/team/14.png,fieldGoalPct,Field Goal Percentage,The ratio of field goals made to field goals attempted: FGM / FGA,43.548,8,Offensive,8th,#2c5235,5
 14,Seattle Storm,2c5235,www/team/14.png,freeThrowPct,Free Throw Percentage,The ratio of free throws made to free throws attempted: FTM / FTA,83.983,1,Offensive,1st,#2c5235,5
 14,Seattle Storm,2c5235,www/team/14.png,points,Points,The number of points scored.,3329,5,Offensive,5th,#2c5235,5
-14,Seattle Storm,2c5235,www/team/14.png,avgPoints,Points Per Game,The average number of points scored per game.,83.225,NA,Offensive,NA,#2c5235,5
+14,Seattle Storm,2c5235,www/team/14.png,avgPoints,Points Per Game,The average number of points scored per game.,83.225,,Offensive,,#2c5235,5
 16,Washington Mystics,e03a3e,www/team/16.png,blocks,Blocks,"Short for blocked shot, number of times when a defensive player legally deflects a field goal attempt from an offensive player.",137,11,Defensive,11th,#e03a3e,9
 16,Washington Mystics,e03a3e,www/team/16.png,steals,Steals,The number of times a defensive player forced a turnover by intercepting or deflecting a pass or a dribble of an offensive player.,291,6,Defensive,6th,#e03a3e,9
 16,Washington Mystics,e03a3e,www/team/16.png,totalRebounds,Rebounds,The total number of rebounds for a team or player,1274,21,General,21st,#e03a3e,9
 16,Washington Mystics,e03a3e,www/team/16.png,fieldGoalPct,Field Goal Percentage,The ratio of field goals made to field goals attempted: FGM / FGA,43.305,9,Offensive,9th,#e03a3e,9
 16,Washington Mystics,e03a3e,www/team/16.png,freeThrowPct,Free Throw Percentage,The ratio of free throws made to free throws attempted: FTM / FTA,76.705,9,Offensive,9th,#e03a3e,9
 16,Washington Mystics,e03a3e,www/team/16.png,points,Points,The number of points scored.,3172,9,Offensive,9th,#e03a3e,9
-16,Washington Mystics,e03a3e,www/team/16.png,avgPoints,Points Per Game,The average number of points scored per game.,79.3,NA,Offensive,NA,#e03a3e,9
+16,Washington Mystics,e03a3e,www/team/16.png,avgPoints,Points Per Game,The average number of points scored per game.,79.3,,Offensive,,#e03a3e,9
 17,Las Vegas Aces,a7a8aa,www/team/17.png,blocks,Blocks,"Short for blocked shot, number of times when a defensive player legally deflects a field goal attempt from an offensive player.",198,2,Defensive,2nd,#a7a8aa,1
 17,Las Vegas Aces,a7a8aa,www/team/17.png,steals,Steals,The number of times a defensive player forced a turnover by intercepting or deflecting a pass or a dribble of an offensive player.,282,9,Defensive,9th,#a7a8aa,1
 17,Las Vegas Aces,a7a8aa,www/team/17.png,totalRebounds,Rebounds,The total number of rebounds for a team or player,1364,13,General,13th,#a7a8aa,1
 17,Las Vegas Aces,a7a8aa,www/team/17.png,fieldGoalPct,Field Goal Percentage,The ratio of field goals made to field goals attempted: FGM / FGA,44.86,2,Offensive,2nd,#a7a8aa,1
 17,Las Vegas Aces,a7a8aa,www/team/17.png,freeThrowPct,Free Throw Percentage,The ratio of free throws made to free throws attempted: FTM / FTA,82.81,2,Offensive,2nd,#a7a8aa,1
 17,Las Vegas Aces,a7a8aa,www/team/17.png,points,Points,The number of points scored.,3455,1,Offensive,1st,#a7a8aa,1
-17,Las Vegas Aces,a7a8aa,www/team/17.png,avgPoints,Points Per Game,The average number of points scored per game.,86.375,NA,Offensive,NA,#a7a8aa,1
+17,Las Vegas Aces,a7a8aa,www/team/17.png,avgPoints,Points Per Game,The average number of points scored per game.,86.375,,Offensive,,#a7a8aa,1
 18,Connecticut Sun,f05023,www/team/18.png,blocks,Blocks,"Short for blocked shot, number of times when a defensive player legally deflects a field goal attempt from an offensive player.",146,10,Defensive,10th,#f05023,8
 18,Connecticut Sun,f05023,www/team/18.png,steals,Steals,The number of times a defensive player forced a turnover by intercepting or deflecting a pass or a dribble of an offensive player.,326,3,Defensive,3rd,#f05023,8
 18,Connecticut Sun,f05023,www/team/18.png,totalRebounds,Rebounds,The total number of rebounds for a team or player,1338,16,General,16th,#f05023,8
 18,Connecticut Sun,f05023,www/team/18.png,fieldGoalPct,Field Goal Percentage,The ratio of field goals made to field goals attempted: FGM / FGA,43.671,7,Offensive,7th,#f05023,8
 18,Connecticut Sun,f05023,www/team/18.png,freeThrowPct,Free Throw Percentage,The ratio of free throws made to free throws attempted: FTM / FTA,75.329,11,Offensive,11th,#f05023,8
 18,Connecticut Sun,f05023,www/team/18.png,points,Points,The number of points scored.,3204,8,Offensive,8th,#f05023,8
-18,Connecticut Sun,f05023,www/team/18.png,avgPoints,Points Per Game,The average number of points scored per game.,80.1,NA,Offensive,NA,#f05023,8
+18,Connecticut Sun,f05023,www/team/18.png,avgPoints,Points Per Game,The average number of points scored per game.,80.1,,Offensive,,#f05023,8
 19,Chicago Sky,5091cd,www/team/19.png,blocks,Blocks,"Short for blocked shot, number of times when a defensive player legally deflects a field goal attempt from an offensive player.",151,8,Defensive,8th,#5091cd,11
 19,Chicago Sky,5091cd,www/team/19.png,steals,Steals,The number of times a defensive player forced a turnover by intercepting or deflecting a pass or a dribble of an offensive player.,280,10,Defensive,10th,#5091cd,11
 19,Chicago Sky,5091cd,www/team/19.png,totalRebounds,Rebounds,The total number of rebounds for a team or player,1464,8,General,8th,#5091cd,11
 19,Chicago Sky,5091cd,www/team/19.png,fieldGoalPct,Field Goal Percentage,The ratio of field goals made to field goals attempted: FGM / FGA,42.232,11,Offensive,11th,#5091cd,11
 19,Chicago Sky,5091cd,www/team/19.png,freeThrowPct,Free Throw Percentage,The ratio of free throws made to free throws attempted: FTM / FTA,74.225,12,Offensive,12th,#5091cd,11
 19,Chicago Sky,5091cd,www/team/19.png,points,Points,The number of points scored.,3096,11,Offensive,11th,#5091cd,11
-19,Chicago Sky,5091cd,www/team/19.png,avgPoints,Points Per Game,The average number of points scored per game.,77.4,NA,Offensive,NA,#5091cd,11
+19,Chicago Sky,5091cd,www/team/19.png,avgPoints,Points Per Game,The average number of points scored per game.,77.4,,Offensive,,#5091cd,11
 20,Atlanta Dream,e31837,www/team/20.png,blocks,Blocks,"Short for blocked shot, number of times when a defensive player legally deflects a field goal attempt from an offensive player.",148,9,Defensive,9th,#e31837,12
 20,Atlanta Dream,e31837,www/team/20.png,steals,Steals,The number of times a defensive player forced a turnover by intercepting or deflecting a pass or a dribble of an offensive player.,288,7,Defensive,7th,#e31837,12
 20,Atlanta Dream,e31837,www/team/20.png,totalRebounds,Rebounds,The total number of rebounds for a team or player,1444,6,General,6th,#e31837,12
 20,Atlanta Dream,e31837,www/team/20.png,fieldGoalPct,Field Goal Percentage,The ratio of field goals made to field goals attempted: FGM / FGA,40.837,12,Offensive,12th,#e31837,12
 20,Atlanta Dream,e31837,www/team/20.png,freeThrowPct,Free Throw Percentage,The ratio of free throws made to free throws attempted: FTM / FTA,77.222,8,Offensive,8th,#e31837,12
 20,Atlanta Dream,e31837,www/team/20.png,points,Points,The number of points scored.,3080,12,Offensive,12th,#e31837,12
-20,Atlanta Dream,e31837,www/team/20.png,avgPoints,Points Per Game,The average number of points scored per game.,77,NA,Offensive,NA,#e31837,12
+20,Atlanta Dream,e31837,www/team/20.png,avgPoints,Points Per Game,The average number of points scored per game.,77,,Offensive,,#e31837,12

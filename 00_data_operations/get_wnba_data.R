@@ -1,8 +1,7 @@
+tictoc::tic()
 library(tidyverse)
-# library(ffscrapr)
 library(httr)
 library(jsonlite)
-# library(glue)
 library(here)
 library(tidyjson)
 
@@ -57,8 +56,28 @@ team_list %>%
 
 }
 
-team_meta <- team_IDs %>% purrr::map_dfr(get_team_meta) %>% distinct_all()
+team_meta <- team_IDs %>% 
+  purrr::map_dfr(get_team_meta) %>% 
+  distinct_all() 
 
+## team-conference reference table ----------------------------
+#team_conference_xwalk <- 
+  team_meta %>% 
+  distinct(id, displayName) %>% 
+  arrange(as.double(id)) %>% 
+  mutate(conference = c("Western Conference", 
+                        "Eastern Conference",
+                        "Western Conference", 
+                        "Western Conference", 
+                        "Eastern Conference",
+                        "Western Conference",
+                        "Western Conference",
+                        "Eastern Conference",
+                        "Western Conference", 
+                        "Eastern Conference",
+                        "Eastern Conference",
+                        "Eastern Conference")) %>% 
+  data.table::fwrite(here(... = "01_data", "table", "clean","team_conference_xwalk.csv"))
 
 # download team logos
 team_meta %>% 
@@ -77,11 +96,13 @@ logo_filepaths <-
          id = str_remove(id, "\\.png")) %>% 
   rename(team_logo_filename = value) 
   
-team_meta %>% 
+team_meta_final <- team_meta %>% 
   # select(-team_logo_filename) %>% 
   left_join(logo_filepaths) %>% 
-  count(team_logo_filename) %>%
-  write_csv(here(... = "01_data", "table", "raw","team_meta.csv"))
+  select(-where(is_list))
+
+team_meta_final %>%
+  data.table::fwrite(here(... = "01_data", "table", "raw","team_meta.csv"))
 
 
 
@@ -95,15 +116,22 @@ stats_list <- response$content %>% rawToChar() %>% fromJSON()
 defensive_stats <- stats_list$splits$categories$stats [[1]] %>% mutate(categories = 'Defensive')
 general_stats <- stats_list$splits$categories$stats [[2]] %>% mutate(categories = 'General')
 offensive_stats <- stats_list$splits$categories$stats [[3]] %>% mutate(categories = 'Offensive')
-  
+
+level1 <- 
+  response$content %>% 
+  rawToChar() %>% 
+  spread_all %>% 
+  mutate(join_col = "1") %>% 
+  janitor::clean_names()
+
 bind_rows(defensive_stats, general_stats, offensive_stats) %>% 
   as_tibble() %>%
   mutate(team_id = team_id, join_col = "1") %>% 
   left_join(level1)
 }
 
-all_team_stats <- team_IDs %>% purrr::map_dfr(get_team_stats)
-all_team_stats %>% write_csv(here(... = "01_data", "table", "raw","team_stats.csv"))
+all_team_stats <- team_IDs %>% purrr::map_dfr(get_team_stats) %>% select(-where(is_list))
+all_team_stats %>% data.table::fwrite(here(... = "01_data", "table", "raw","team_stats.csv"))
 
 # get team injuries -------------------------
 get_athlete_injuries <- function(api_call){
@@ -155,7 +183,7 @@ get_team_injuries <- function(team_id=3){
 
 injuries_by_athlete <- team_IDs %>% purrr::map_dfr(get_team_injuries)
 
-injuries_by_athlete %>% write_csv(here(... = "01_data", "table", "raw","athlete_injury.csv"))
+injuries_by_athlete %>% data.table::fwrite(here(... = "01_data", "table", "raw","athlete_injury.csv"))
 
 
 
@@ -235,11 +263,10 @@ return(athlete_tbl)
 athlete_APIs <- get_athlete_APIs()
 
 # run those endpoints through the get_athlete_data function
+
 all_athlete_data <- athlete_APIs %>% 
   purrr::map_dfr(get_athlete_data)
 
-# write to csv
-all_athlete_data %>% write_csv(here(... = "01_data", "table", "raw","athlete_full.csv"))
 
 # download headshots 
 all_athlete_data %>% 
@@ -248,8 +275,6 @@ all_athlete_data %>%
   distinct_all() %>% 
   filter(!is.na(url)) %>% 
   purrr::pwalk(download_image)
-
-all_athlete_data <- read_csv(here(... = "01_data", "table", "raw","athlete_full.csv"))
 
 headshot_filepaths <- 
   list.files(here(... = "www","athlete"), full.names = T) %>% 
@@ -261,8 +286,8 @@ headshot_filepaths <-
   distinct(athlete_id, .keep_all = T)
 
 all_athlete_data %>% 
-  left_join(headshot_filepaths, relationship = 'many-to-many') %>% 
-  write_csv(here(... = "01_data", "table", "raw","athlete_full.csv"))
+  left_join(headshot_filepaths %>% mutate(athlete_id = as.character(athlete_id)), relationship = 'many-to-many') %>% 
+  data.table::fwrite(here(... = "01_data", "table", "raw","athlete_full.csv"))
 
 
 # Get news -------------------------------------
@@ -311,7 +336,7 @@ news_image_filepaths <-
 news_tbl %>% 
   left_join(news_image_filepaths) %>% 
   filter(!is.na(title)) %>% 
-  write_csv(here(... = "01_data", "table", "raw","latest_news.csv"))
+  data.table::fwrite(here(... = "01_data", "table", "raw","latest_news.csv"))
 
 
 
@@ -403,7 +428,7 @@ season_schedule_trimmed <-
               distinct(id, displayName),
             by = c("team_id" = "id"))
 
-season_schedule_trimmed %>% write_csv(here("01_data", "table", "raw", "wnba_season_schedule_2024.csv"))
+season_schedule_trimmed %>% data.table::fwrite(here("01_data", "table", "raw", "wnba_season_schedule_2024.csv"))
 
 # response <- GET(paste0("http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard"))#,date))
 # 
@@ -424,11 +449,11 @@ season_schedule_trimmed %>% write_csv(here("01_data", "table", "raw", "wnba_seas
 # cleaning data ------------------------------------------
 
 ## team_stats ------------------------------------------
-team_stats <- read_csv(here("01_data", "table","raw", "team_stats.csv"))
-team_meta <- read_csv(here("01_data", "table","raw", "team_meta.csv"))
+# team_stats <- read_csv(here("01_data", "table","raw", "team_stats.csv"))
+# team_meta <- read_csv(here("01_data", "table","raw", "team_meta.csv"))
 
-raw_teams_full <- team_meta %>% 
-  left_join(team_stats, by = c('id' = 'team_id'), relationship = 'many-to-many') %>% 
+raw_teams_full <- team_meta_final %>% 
+  left_join(all_team_stats %>% mutate(team_id = as.character(team_id)), by = c('id' = 'team_id'), relationship = 'many-to-many') %>% 
   select(team_id = id, team_name = displayName.x,
          color,team_logo_filename,
          stat_name = name.y,
@@ -457,44 +482,43 @@ clean_team_stats <-
   mutate(team_rank = stat_rank[stat_display_name=="Points"]) %>% 
   ungroup()
 
-clean_team_stats %>% write_csv(here("01_data","table","clean", "clean_team_stats.csv"))
+clean_team_stats %>% data.table::fwrite(here("01_data","table","clean", "clean_team_stats.csv"))
 
 
 ## recent games -----------------------------------
-raw_schedule <- read_csv(here("01_data", "table", "raw", "wnba_season_schedule_2024.csv"))
+# raw_schedule <- read_csv(here("01_data", "table", "raw", "wnba_season_schedule_2024.csv"))
 
 recent_games <-
-  raw_schedule %>% 
+  season_schedule_trimmed %>% 
   filter(date < today() & date > today()-6) %>% 
   group_by(id) %>% 
   mutate(winner = max(team_score )==team_score) %>% 
   ungroup() 
 
-recent_games %>% write_csv(here("01_data","table","clean", "clean_recent_games.csv"))
+recent_games %>% data.table::fwrite(here("01_data","table","clean", "clean_recent_games.csv"))
 
 upcoming_games <-
-  raw_schedule %>% 
+  season_schedule_trimmed %>% 
   filter(date > today() & date < today()+6)  %>% 
   left_join(raw_teams_full %>%
               distinct(team_id, team_name))
 
 
-upcoming_games %>% write_csv(here("01_data","table","clean", "clean_upcoming_games.csv"))
+upcoming_games %>% data.table::fwrite(here("01_data","table","clean", "clean_upcoming_games.csv"))
 
 ## total wins and losses by team ----------------------------
-wins_losses_by_team <- raw_schedule %>% 
+wins_losses_by_team <- season_schedule_trimmed %>% 
   filter(date < today()) %>% 
   group_by(id) %>% 
   mutate(winner = max(team_score )==team_score) %>% 
   ungroup()  %>% 
   left_join(raw_teams_full %>%
-              distinct(team_id, team_name)) %>% 
+              distinct(team_id, team_name) ) %>% 
   count(team_name, winner)
 
-wins_losses_by_team %>% write_csv(here("01_data","table","clean", "wins_losses_by_team.csv"))
+wins_losses_by_team %>% data.table::fwrite(here("01_data","table","clean", "wins_losses_by_team.csv"))
 
+tictoc::toc()
 
-## News --------------------------------------------
-raw_news <- read_csv(here(... = "01_data", "table", "raw","latest_news.csv"))
 
 

@@ -8,14 +8,14 @@ dashboard_ui <- function(id) {
           box(width = 4, status = 'primary', solidHeader = TRUE,title = "Winning Percentage", p("a little table of the top 3 teams")),
           box(width = 4, status = 'danger', solidHeader = TRUE,title = "Wins", p("a little table of the top 3 teams")),
           box(width = 4, status = 'primary',solidHeader = TRUE, title = "Losses", p("a little table of the top 3 teams")),
-          box(title = "The Stats", 
-            width = 9,height = '650px',
+          box(title = h2("Stats",  tags$style ('h2 {margin-top: 0;}')),
+            width = 9,height = '650px',  #tags$style ('.box-header {padding-top: 0; margin-top: 0; border: 0px white}'),
             column(width = 2,
                    radioButtons(inputId = ns("team_or_player"),label = "Player Stats or Team Stats", choices = c("Player","Team")),
                    uiOutput(outputId = ns("stat_selector"))
             ),
             column(width = 10,
-                   plotOutput(outputId = ns("stat_plot"),height = '560px')
+                   plotOutput(outputId = ns("stat_plot"),height = '545px')
             )
           ),
           box(title = "Last Week's Scoreboard", width = 3,
@@ -37,7 +37,7 @@ dashboard_server <- function(id) {
       create_recent_game_box <- function(two_row_game_tbl){ # two_row_game_tbl is a two row tibble for a single game. One row for each competitor. 
         date <- two_row_game_tbl$date[1] %>% format("%A, %B %d, %Y") 
         
-        div(tags$style(".rt-compact .rt-td-inner, .rt-compact .rt-th-inner {padding: 0px 0px;}"), #This makes the reactable more compact
+        div(tags$style(".rt-compact .rt-td-inner, .rt-compact .rt-th-inner {padding: 0px 0px;}  .Reactable.ReactTable.rt-compact {margin-bottom: 10px}"), #This makes the reactable more compact
             two_row_game_tbl %>% 
               select(team_name, team_score) %>% 
               reactable::reactable(
@@ -50,9 +50,9 @@ dashboard_server <- function(id) {
                                                       width = '10%'), value)}
                   ),
                   team_score = colDef(name = '',style = "font-weight: 800")
-                ),height = '60px',compact = T
-              ), # end reactable
-            br() # add separation between this iteration and the next iteration
+                ),height = '78px',compact = T
+              )#, # end reactable
+            # br() # add separation between this iteration and the next iteration
         ) # end div
       } # end create_recent_game_box function
       
@@ -120,21 +120,23 @@ dashboard_server <- function(id) {
     })
       
       # News ---------------------------------------------
-      
-       create_news_box <- function(title, description, news_image_filepath){
+      create_news_box <- function(title, description, news_image_filepath, news_link){
         news_box <- box(title = title, width=4,
-            shiny::img(src = news_image_filepath,
-                       alt = title,
-                       width = '100%'),
-            p(description)
-            )
+                        tags$a(
+                          href=news_link, 
+                          tags$img(src = news_image_filepath,
+                                   alt = title,
+                                   width = '100%'),
+                        p(description)
+                        ),
+        )
         return(news_box)
       }
       
       # Build news UI by mapping create_news_box to all news records
       output$news <- renderUI({
         news %>% 
-          distinct(title, description, news_image_filepath) %>% 
+          distinct(title, description, news_image_filepath, news_link) %>% 
           purrr::pmap(create_news_box) 
       })
       

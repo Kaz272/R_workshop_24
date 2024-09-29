@@ -1,0 +1,27 @@
+team_name,winner,n
+Atlanta Dream,FALSE,28
+Atlanta Dream,TRUE,16
+Chicago Sky,FALSE,28
+Chicago Sky,TRUE,14
+Connecticut Sun,FALSE,13
+Connecticut Sun,TRUE,30
+Dallas Wings,FALSE,31
+Dallas Wings,TRUE,10
+Indiana Fever,FALSE,23
+Indiana Fever,TRUE,21
+Las Vegas Aces,FALSE,13
+Las Vegas Aces,TRUE,30
+Los Angeles Sparks,FALSE,32
+Los Angeles Sparks,TRUE,10
+Minnesota Lynx,FALSE,10
+Minnesota Lynx,TRUE,35
+New York Liberty,FALSE,10
+New York Liberty,TRUE,35
+Phoenix Mercury,FALSE,25
+Phoenix Mercury,TRUE,19
+Seattle Storm,FALSE,18
+Seattle Storm,TRUE,26
+Washington Mystics,FALSE,28
+Washington Mystics,TRUE,14
+NA,FALSE,2
+NA,TRUE,1

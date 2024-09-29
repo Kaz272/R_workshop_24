@@ -10,7 +10,7 @@ library(tidyjson)
 download_image <- function(id, url, category){
   file_type <- str_sub(url, -3,-1)
   file_name <- paste0(id, ".", file_type)
-download.file(url, here(... = "01_data", "image", category, file_name ), mode = "wb")
+download.file(url, here(... = "www", category, file_name ), mode = "wb")
 }
 
 # teams to query ---------------------------
@@ -59,7 +59,6 @@ team_list %>%
 
 team_meta <- team_IDs %>% purrr::map_dfr(get_team_meta) %>% distinct_all()
 
-team_meta %>% write_csv(here(... = "01_data", "table", "team_meta.csv"))
 
 # download team logos
 team_meta %>% 
@@ -71,21 +70,25 @@ team_meta %>%
   select(-dark) %>% 
   purrr::pwalk(download_image)
 
+logo_filepaths <- 
+  list.files(here(... = "www","team"), full.names = T) %>% 
+  as_tibble() %>% 
+  mutate(id = str_remove(value, "(.*)team/"),
+         id = str_remove(id, "\\.png")) %>% 
+  rename(team_logo_filename = value) 
+  
+team_meta %>% 
+  # select(-team_logo_filename) %>% 
+  left_join(logo_filepaths) %>% 
+  count(team_logo_filename) %>%
+  write_csv(here(... = "01_data", "table", "raw","team_meta.csv"))
+
 
 
 # get team stats ---------------------------
 get_team_stats <- function(team_id=3){
   
 response <- GET(paste0("http://sports.core.api.espn.com/v2/sports/basketball/leagues/wnba/seasons/2024/types/2/teams/", team_id ,"/statistics?lang=en&region=us"))
-stats_content <- response$content %>% 
-  rawToChar()
-
-level1 <- 
-  response$content %>% 
-  rawToChar() %>% 
-  spread_all %>% 
-  mutate(join_col = "1") %>% 
-  janitor::clean_names()
 
 stats_list <- response$content %>% rawToChar() %>% fromJSON()
 
@@ -100,7 +103,7 @@ bind_rows(defensive_stats, general_stats, offensive_stats) %>%
 }
 
 all_team_stats <- team_IDs %>% purrr::map_dfr(get_team_stats)
-all_team_stats %>% write_csv(here(... = "01_data", "table", "team_stats.csv"))
+all_team_stats %>% write_csv(here(... = "01_data", "table", "raw","team_stats.csv"))
 
 # get team injuries -------------------------
 get_athlete_injuries <- function(api_call){
@@ -152,7 +155,7 @@ get_team_injuries <- function(team_id=3){
 
 injuries_by_athlete <- team_IDs %>% purrr::map_dfr(get_team_injuries)
 
-injuries_by_athlete %>% write_csv(here(... = "01_data", "table", "athlete_injury.csv"))
+injuries_by_athlete %>% write_csv(here(... = "01_data", "table", "raw","athlete_injury.csv"))
 
 
 
@@ -236,7 +239,7 @@ all_athlete_data <- athlete_APIs %>%
   purrr::map_dfr(get_athlete_data)
 
 # write to csv
-all_athlete_data %>% write_csv(here(... = "01_data", "table", "athlete_full.csv"))
+all_athlete_data %>% write_csv(here(... = "01_data", "table", "raw","athlete_full.csv"))
 
 # download headshots 
 all_athlete_data %>% 
@@ -245,6 +248,22 @@ all_athlete_data %>%
   distinct_all() %>% 
   filter(!is.na(url)) %>% 
   purrr::pwalk(download_image)
+
+all_athlete_data <- read_csv(here(... = "01_data", "table", "raw","athlete_full.csv"))
+
+headshot_filepaths <- 
+  list.files(here(... = "www","athlete"), full.names = T) %>% 
+  as_tibble() %>% 
+  mutate(athlete_id = str_remove(value, "(.*)athlete/"),
+         athlete_id = str_remove(athlete_id, "\\.png|\\jpg"),
+         athlete_id = as.double(athlete_id)) %>% 
+  rename(player_headshot_filename = value) %>% 
+  distinct(athlete_id, .keep_all = T)
+
+all_athlete_data %>% 
+  left_join(headshot_filepaths, relationship = 'many-to-many') %>% 
+  write_csv(here(... = "01_data", "table", "raw","athlete_full.csv"))
+
 
 # Get news -------------------------------------
 response <- GET("now.core.api.espn.com/v1/sports/news?limit=10&league=wnba")
@@ -261,6 +280,7 @@ id <- news_list$headlines$dataSourceIdentifier
 description <-news_list$headlines$description
 news_link <- news_list$headlines$links$web$href
 image_urls <- news_list$headlines$images 
+titles <- news_list$headlines$title
 
 image_urls_tbl <-
   purrr::map2_dfr(.x = image_urls, .y = id, ~mutate(.x, id=.y)) %>% 
@@ -268,6 +288,7 @@ image_urls_tbl <-
   as_tibble
 
 news_tbl <- tibble(id = id,
+                   title = titles,
                    description = description, 
                    news_link = news_link) %>% 
   left_join(image_urls_tbl) %>% 
@@ -275,7 +296,205 @@ news_tbl <- tibble(id = id,
 
 news_tbl %>% 
   select(id,url,category) %>% 
+  filter(!is.na(url)) %>% 
   purrr::pwalk(download_image)
 
+
+news_image_filepaths <- 
+  list.files(here(... = "www","news"), full.names = T) %>% 
+  as_tibble() %>% 
+  mutate(id = str_remove(value, "(.*)news/"),
+         id = str_remove(id, "\\.jpg")) %>% 
+  rename(news_image_filepath = value) %>% 
+  distinct(id, .keep_all = T)
+
+news_tbl %>% 
+  left_join(news_image_filepaths) %>% 
+  filter(!is.na(title)) %>% 
+  write_csv(here(... = "01_data", "table", "raw","latest_news.csv"))
+
+
+
+# Get Calendar data -------
+
+date_sequence <- 
+seq.Date(from = ymd(20240401), 
+         to = ymd(20241101),
+         by = 'days') %>% 
+  format(., "%Y%m%d") %>% 
+  as.character()
+
+get_schedule <- function(date){
+response <- GET(paste0("http://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard?dates=",date))
+  
+wnba_list <- response$content %>% 
+  rawToChar() %>% 
+  fromJSON()
+
+# event_date <- 
+dates <- wnba_list$events$date
+shortName <- wnba_list$events$shortName
+event_id <- wnba_list$events$id
+
+schedule <-
+wnba_list$events %>% 
+  as_tibble(.name_repair = 'unique') %>% 
+  unnest(cols = 'competitions', names_repair = 'unique', names_sep = '_') #%>% 
+  # unnest(cols = 'competitions_venue', names_repair = 'unique', names_sep = '_') %>% 
+  # unnest(cols = 'competitions_venue_address', names_repair = 'unique', names_sep = '_') %>% 
+  # unnest(cols = 'competitions_competitors', names_repair = 'unique', names_sep = '_') %>%
+  # unnest(cols = 'competitions_broadcasts', names_repair = 'unique', names_sep = '_') %>%
+  # # unnest(cols = 'competitions_broadcasts_names', names_repair = 'unique', names_sep = '_') %>% 
+  # select(id, date, shortName, 
+  #        competitions_recent,
+  #        competitions_venue_address_city,
+  #        competitions_venue_address_state,
+  #        competitions_competitors_score#, 
+  #        # competitions_broadcasts_names
+  #        )
+  # mutate(venue_city = venue$address$city)
+
+return(schedule)
+
+}
+
+response <- GET(paste0("http://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard"))
+
+wnba_list <- response$content %>% 
+  rawToChar() %>% 
+  fromJSON()
+
+dates_in_2024_season <- wnba_list$leagues$calendar %>% unlist() %>% str_remove_all(.,"T(.*)|\\-")
+
+season_schedule <- dates_in_2024_season %>% 
+  purrr::map_dfr(get_schedule) %>% 
+  distinct_all()
+
+season_schedule_trimmed <-
+  season_schedule %>% 
+  unnest(cols = 'competitions_competitors', names_repair = 'unique', names_sep = '_') %>% 
+  unnest(cols = 'competitions_venue', names_repair = 'unique', names_sep = '_') %>% 
+    unnest(cols = 'competitions_venue_address', names_repair = 'unique', names_sep = '_') %>% 
+  unnest(cols = 'competitions_competitors_leaders', names_repair = 'unique', names_sep = '_') %>%
+    unnest(cols = 'competitions_competitors_leaders_leaders', names_repair = 'unique', names_sep = '_') %>% 
+    unnest(cols = 'competitions_competitors_leaders_leaders_athlete', names_repair = 'unique', names_sep = '_') %>% 
+    unnest(cols = 'competitions_competitors_leaders_leaders_team', names_repair = 'unique', names_sep = '_') %>%  
+    unnest(cols = 'competitions_competitors_leaders_leaders_athlete_team', names_repair = 'unique', names_sep = '_') %>% 
+    unnest(cols = 'competitions_competitors_statistics', names_repair = 'unique', names_sep = '_') %>% 
+  select(id, date, shortName,
+         team_id = competitions_competitors_id,
+         team_score = competitions_competitors_score,
+         broadcast = competitions_broadcast,
+         city = competitions_venue_address_city,
+         state = competitions_venue_address_state,
+         game_stat_display_name = competitions_competitors_statistics_abbreviation,
+         game_stat_name = competitions_competitors_statistics_name,      
+         game_stat_value = competitions_competitors_statistics_displayValue,
+         leader_team_id = competitions_competitors_leaders_leaders_team_id,
+         leader_stat_name = competitions_competitors_leaders_displayName,
+         leader_stat_value = competitions_competitors_leaders_leaders_value,
+         leader_id = competitions_competitors_leaders_leaders_athlete_id,
+         leader_display_name = competitions_competitors_leaders_leaders_athlete_displayName
+         ) %>% 
+  left_join(logo_filepaths %>% 
+              mutate(id = as.character(id)), 
+            by = c("team_id"  = "id")) %>% 
+  left_join(team_meta %>%
+              distinct(id, displayName),
+            by = c("team_id" = "id"))
+
+season_schedule_trimmed %>% write_csv(here("01_data", "table", "raw", "wnba_season_schedule_2024.csv"))
+
+# response <- GET(paste0("http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard"))#,date))
+# 
+# nba_list <- response$content %>% 
+#   rawToChar() %>% 
+#   fromJSON()
+# 
+# mens_dates_in_2024_season <- nba_list$leagues$calendar %>% unlist() %>% str_remove_all(.,"T(.*)|\\-")
+# mens_season_schedule <- mens_dates_in_2024_season %>% 
+#   purrr::map_dfr(get_schedule) %>% 
+#   distinct_all()
+# 
+
+
+
+
+
+# cleaning data ------------------------------------------
+
+## team_stats ------------------------------------------
+team_stats <- read_csv(here("01_data", "table","raw", "team_stats.csv"))
+team_meta <- read_csv(here("01_data", "table","raw", "team_meta.csv"))
+
+raw_teams_full <- team_meta %>% 
+  left_join(team_stats, by = c('id' = 'team_id'), relationship = 'many-to-many') %>% 
+  select(team_id = id, team_name = displayName.x,
+         color,team_logo_filename,
+         stat_name = name.y,
+         stat_display_name = displayName.y,
+         stat_desc= description,
+         stat_value = value,
+         stat_rank = rank, categories, 
+         stat_rank_display =rankDisplayValue ) %>% 
+  distinct_all() %>% 
+  mutate(color_hex = str_c("#", color)) %>% 
+  mutate(team_logo_filename = str_remove(team_logo_filename, "C:/Users/Maxin/OneDrive/Documents/programming/R_workshop/")) %>% 
+  filter(stat_name != "rebounds")
+
+
+clean_team_stats <- 
+  raw_teams_full %>% 
+  filter(stat_display_name %in% c('Points', 
+                                  'Field Goal Percentage',
+                                  'Free Throw Percentage',
+                                  'Rebounds', 
+                                  'Blocks', 
+                                  'Steals', 
+                                  # 'Games Played', 
+                                  'Points Per Game')) %>%
+  group_by(team_id) %>% 
+  mutate(team_rank = stat_rank[stat_display_name=="Points"]) %>% 
+  ungroup()
+
+clean_team_stats %>% write_csv(here("01_data","table","clean", "clean_team_stats.csv"))
+
+
+## recent games -----------------------------------
+raw_schedule <- read_csv(here("01_data", "table", "raw", "wnba_season_schedule_2024.csv"))
+
+recent_games <-
+  raw_schedule %>% 
+  filter(date < today() & date > today()-6) %>% 
+  group_by(id) %>% 
+  mutate(winner = max(team_score )==team_score) %>% 
+  ungroup() 
+
+recent_games %>% write_csv(here("01_data","table","clean", "clean_recent_games.csv"))
+
+upcoming_games <-
+  raw_schedule %>% 
+  filter(date > today() & date < today()+6)  %>% 
+  left_join(raw_teams_full %>%
+              distinct(team_id, team_name))
+
+
+upcoming_games %>% write_csv(here("01_data","table","clean", "clean_upcoming_games.csv"))
+
+## total wins and losses by team ----------------------------
+wins_losses_by_team <- raw_schedule %>% 
+  filter(date < today()) %>% 
+  group_by(id) %>% 
+  mutate(winner = max(team_score )==team_score) %>% 
+  ungroup()  %>% 
+  left_join(raw_teams_full %>%
+              distinct(team_id, team_name)) %>% 
+  count(team_name, winner)
+
+wins_losses_by_team %>% write_csv(here("01_data","table","clean", "wins_losses_by_team.csv"))
+
+
+## News --------------------------------------------
+raw_news <- read_csv(here(... = "01_data", "table", "raw","latest_news.csv"))
 
 

@@ -1,0 +1,9 @@
+id,date,shortName,team_id,team_score,broadcast,city,state,team_logo_filename,team_name
+401724938,2024-09-29T19:00:00Z,LV @ NY,9,0,ABC,Brooklyn,NY,C:/Users/Maxin/OneDrive/Documents/programming/R_workshop/01_data/image/team/9.png,New York Liberty
+401724938,2024-09-29T19:00:00Z,LV @ NY,17,0,ABC,Brooklyn,NY,C:/Users/Maxin/OneDrive/Documents/programming/R_workshop/01_data/image/team/17.png,Las Vegas Aces
+401725075,2024-09-30T00:30:00Z,CONN @ MIN,8,0,ESPN,Minneapolis,MN,C:/Users/Maxin/OneDrive/Documents/programming/R_workshop/01_data/image/team/8.png,Minnesota Lynx
+401725075,2024-09-30T00:30:00Z,CONN @ MIN,18,0,ESPN,Minneapolis,MN,C:/Users/Maxin/OneDrive/Documents/programming/R_workshop/01_data/image/team/18.png,Connecticut Sun
+401724939,2024-10-01T04:00:00Z,LV @ NY,9,0,NA,Brooklyn,NY,C:/Users/Maxin/OneDrive/Documents/programming/R_workshop/01_data/image/team/9.png,New York Liberty
+401724939,2024-10-01T04:00:00Z,LV @ NY,17,0,NA,Brooklyn,NY,C:/Users/Maxin/OneDrive/Documents/programming/R_workshop/01_data/image/team/17.png,Las Vegas Aces
+401725076,2024-10-01T04:00:00Z,CONN @ MIN,8,0,NA,Minneapolis,MN,C:/Users/Maxin/OneDrive/Documents/programming/R_workshop/01_data/image/team/8.png,Minnesota Lynx
+401725076,2024-10-01T04:00:00Z,CONN @ MIN,18,0,NA,Minneapolis,MN,C:/Users/Maxin/OneDrive/Documents/programming/R_workshop/01_data/image/team/18.png,Connecticut Sun

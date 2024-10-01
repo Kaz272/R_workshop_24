@@ -27,7 +27,7 @@ To run the Shiny application locally:
 2. Ensure you have R and RStudio installed.
 3. Install the required packages:
    ```R
-   install.packages(c("shiny", "shinydashboard", "here", "tictoc"))
+   install.packages(c("shiny", "shinydashboard", "here", "tictoc", "shinyWidgets", "timevis"))
    ```
    shiny::runApp("app.R")
      ```

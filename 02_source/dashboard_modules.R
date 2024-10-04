@@ -35,22 +35,22 @@ dashboard_server <- function(id) {
       # Recent Games ---------------------------------
       # function to build a reactable for last n games that took place in the last 6 days
       create_recent_game_box <- function(two_row_game_tbl){ # two_row_game_tbl is a two row tibble for a single game. One row for each competitor. 
-        date <- two_row_game_tbl$date[1] %>% format("%A, %B %d, %Y") 
+        date <- ymd_hm(two_row_game_tbl$date[1]) %>% format("%A, %B %d, %Y") 
         
         div(tags$style(".rt-compact .rt-td-inner, .rt-compact .rt-th-inner {padding: 0px 0px;}  .Reactable.ReactTable.rt-compact {margin-bottom: 10px}"), #This makes the reactable more compact
             two_row_game_tbl %>% 
               select(team_name, team_score) %>% 
               reactable::reactable(
                 columns = list(
-                  team_name = colDef(name = date,style = 'padding: 0px; margin: 0px;',#),
+                  team_name = colDef(name = date,
                                      cell = function(value, index) {
                                        file_name <- two_row_game_tbl$team_id[index]
                                        div(shiny::img(src = paste0("team/",file_name,".png"),
                                                       alt = value,
                                                       width = '10%'), value)}
                   ),
-                  team_score = colDef(name = '',style = "font-weight: 800")
-                ),height = '78px',compact = T
+                  team_score = colDef(name = '',width=40,style = "font-weight: 800")
+                ),height = '84px',compact = T
               )#, # end reactable
             # br() # add separation between this iteration and the next iteration
         ) # end div
@@ -59,9 +59,10 @@ dashboard_server <- function(id) {
       # Build several UI boxes by mapping create_recent_game_box to a list of two-row tibbles
       output$recent_games <- renderUI({
         recent_games %>% 
-          select(id, team_id, shortName, team_name, date, team_score) %>% 
+          select(id, team_id, shortName, team_name = displayName, date, team_score) %>% 
+          distinct_all() %>% 
           # mutate(nrow = nrow(.)/2) %>% 
-          group_split(id) %>% 
+          group_split(id) %>%
           purrr::map(create_recent_game_box)
       })
       
@@ -107,7 +108,7 @@ dashboard_server <- function(id) {
           ggplot(aes(x = fct_reorder(team_name,team_rank), y = stat_value)) +
           geom_col(aes(fill = team_name)) +
           geom_image(aes(y = for_plot()$y_offset*1.1, image=team_logo_filename), size = 0.22) +
-          geom_text(aes(y = stat_value + for_plot()$y_offset, label = round(stat_value, 0)),size = 20, size.unit = 'pt') +
+          geom_text(aes(y = stat_value + for_plot()$y_offset, label = round(stat_value, 0)),size = 18, size.unit = 'pt') +
         scale_fill_manual(values =unique(for_plot()$data$color_hex) ) +
         theme(legend.position = 'none',
               axis.text = element_text(size = rel(1.4)),

@@ -49,6 +49,8 @@ news <- data.table::fread(here(... = "01_data", "table", "raw","latest_news.csv"
   mutate(news_image_filepath = str_remove(news_image_filepath, "C:/Users/Maxin/OneDrive/Documents/programming/R_workshop/01_data/image/"))
 theme_set(theme_minimal())
 team_conference_xwalk <- data.table::fread(here(... = "01_data", "table", "clean","team_meta.csv"))
+schedule_data <-  data.table::fread(here("01_data", "table", "raw", "wnba_season_schedule_2024.csv")) 
+
 tictoc::toc()
 
 # tictoc::tic()

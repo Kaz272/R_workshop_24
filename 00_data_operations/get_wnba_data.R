@@ -331,7 +331,8 @@ news_image_filepaths <-
   mutate(id = str_remove(value, "(.*)news/"),
          id = str_remove(id, "\\.jpg")) %>% 
   rename(news_image_filepath = value) %>% 
-  distinct(id, .keep_all = T)
+  distinct(id, .keep_all = T) %>% 
+  mutate(news_image_filepath = str_remove(news_image_filepath, "(.*)www/"))
 
 news_tbl %>% 
   left_join(news_image_filepaths) %>% 

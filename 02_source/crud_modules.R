@@ -3,7 +3,9 @@ crud_ui <- function(id) {
   
   ns <- NS(id)
   
-  tabItem(tabName = "crud")
+  tabItem(tabName = "crud",
+          rHandsontableOutput(ns("rhandsontable")),
+          p("test"))
 }
 
 crud_server <- function(id) {
@@ -37,7 +39,7 @@ crud_server <- function(id) {
       schedule_data %>% as_tibble() %>% 
         distinct(id, date, shortName, displayName, broadcast, city, state) %>%
         mutate(city_state = paste0(city,", ", state)) %>% 
-        mutate(date = format(ymd_hm(date), "%Y-%m-%d")) %>% 
+        mutate(date = as_date(ymd_hm(date))) %>% 
         group_by(id) %>%
         ungroup() %>% 
         mutate(competition_team_index = paste0("Team ", row_number())) %>% 
@@ -53,13 +55,15 @@ crud_server <- function(id) {
         #          city = city[1], 
         #          state = state[1]) %>% 
       
-      v <- reactiveValues(schedule = schedule_data)
+      v <- reactiveValues(schedule = schedule_data_modified)
     # v <- list(schedule = schedule_data_modified) # for trouble shooting, use this line.
       
       
       
-      # output$rhandsontable <- 
-        rhandsontable(v$schedule) 
+      output$rhandsontable <-renderRHandsontable({
+        rhandsontable(v$schedule,width = '700px') 
+        
+      })
       
     }
     

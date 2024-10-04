@@ -15,7 +15,7 @@ sidebar <- dashboardSidebar(
   sidebarMenu(
     menuItem(text = "Dashboard",icon = icon('chart-simple'),tabName = 'dashboard'),
     menuItem(text = "Calendar",icon = icon('calendar'),     tabName = 'calendar'),
-    menuItem(text = "Manage Data",icon = icon('wrench'),    tabName = 'dashboard')
+    menuItem(text = "Manage Data",icon = icon('wrench'),    tabName = 'crud')
   )
 
 )
@@ -24,9 +24,9 @@ sidebar <- dashboardSidebar(
 body <- dashboardBody(
   tabItems(
     ### Calling module UI functions ----------------------------
-    crud_ui("crud"),
     dashboard_ui("dashboard"),
-    calendar_ui("calendar")
+    calendar_ui("calendar"),
+    crud_ui("crud")
   )#,
 )
 

@@ -47,7 +47,7 @@ dashboard_server <- function(id) {
                                        file_name <- two_row_game_tbl$team_id[index]
                                        div(shiny::img(src = paste0("team/",file_name,".png"),
                                                       alt = value,
-                                                      width = '10%'), value)}
+                                                      width = '7%'), value)}
                   ),
                   team_score = colDef(name = '',width=40,style = "font-weight: 800")
                 ),height = '84px',compact = T
@@ -107,7 +107,7 @@ dashboard_server <- function(id) {
         for_plot()$data %>%
           ggplot(aes(x = fct_reorder(team_name,team_rank), y = stat_value)) +
           geom_col(aes(fill = team_name)) +
-          geom_image(aes(y = for_plot()$y_offset*1.1, image=team_logo_filename), size = 0.22) +
+          geom_image(aes(y = for_plot()$y_offset*1.1, image=team_logo_filename), size = 0.19) +
           geom_text(aes(y = stat_value + for_plot()$y_offset, label = round(stat_value, 0)),size = 18, size.unit = 'pt') +
         scale_fill_manual(values =unique(for_plot()$data$color_hex) ) +
         theme(legend.position = 'none',

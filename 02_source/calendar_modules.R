@@ -37,6 +37,7 @@ calendar_server <- function(id) {
           start = str_replace_all(start, "T|Z", " "),
           type = NA
         )
+      
       output$calendar <- renderTimevis({
         timevis(
           schedule_for_timevis,

@@ -1,0 +1,197 @@
+---
+title: "Dashboarding for Leaders and Managing Data in Shiny"
+subtitle: "R Gov Conference"
+date: DD October 2024
+format: 
+  revealjs:
+    theme: simple
+    slide-number: true
+    css: styles.css  
+scroll: true
+github-repo: "https://github.com/maxinedrake/R_workshop"
+---
+
+
+## Welcome to the Workshop!
+
+:::{.columns}
+::: {.column width="45%"}
+### **Instructor**  
+[MAJ Maxine Drake](https://www.linkedin.com/in/maxinedrake/)
+
+![](images/maxine.jpg){width=100%}
+:::
+
+::: {.column width="10%"}
+&nbsp;
+:::
+
+::: {.column width="45%"}
+### **Assistant**  
+[LTC Dusty Turner](https://www.linkedin.com/in/dustysturner/)
+
+![](images/dusty-family.jpg){width=100%}
+:::
+:::
+
+---
+
+## Workshop Goals 
+
+By the end of this workshop, participants will leave with:
+
+1. A functional dashboard template.
+2. An understanding of dashboard design principles.
+3. A network of peers for collaboration.
+4. Enhanced skills in R and Shiny.
+5. Strategies for managing data using R.
+
+---
+
+## To Get the Most Out of This Workshop {.smaller}
+
+1. **Latest version of R** (Version 4.3.1)  
+   - [Download R (CRAN Mirror)](https://cran.r-project.org/mirrors.html)  
+
+2. **Latest version of RStudio** (Version 2023.09.0+463)  
+   - [Download RStudio (Official Website)](https://posit.co/download/rstudio-desktop/)  
+
+3. **Git experience**  
+   - Basic understanding of Git for managing your codebase.  
+   - [Download Git (Official Website)](https://git-scm.com/downloads)
+
+4. **Basic R Shiny knowledge**
+
+5. **Data presentation basics**
+
+6. **Knowledge of your organization’s needs**  
+
+---
+
+---
+title: "Dashboarding for Leaders and Managing Data in Shiny"
+subtitle: "R Gov Conference"
+date: DD October 2024
+format: 
+  revealjs:
+    theme: simple
+    slide-number: true
+scroll: true
+github-repo: "https://github.com/maxinedrake/R_workshop"
+---
+
+## Workshop Agenda Overview {.smaller}
+
+- **8:00 AM - 9:00 AM**: Welcome, Introductions & Setup  
+- **9:10 AM - 10:00 AM**: Block 1 - Setting Up Your Environment  
+- **10:10 AM - 11:00 AM**: Block 2 - Dashboard Design Principles  
+- **11:10 AM - 12:00 PM**: Block 3 - Building Interactive Dashboards  
+- **12:00 PM - 1:00 PM**: Lunch  
+- **1:00 PM - 1:50 PM**: Block 4 - Data Organization  
+- **2:00 PM - 2:50 PM**: Block 5 - Calendar Module  
+- **3:00 PM - 3:50 PM**: Block 6 - Advanced Techniques & Final Q&A  
+- **4:00 PM - 5:00 PM**: Hands-on Exercises & Project Work  
+
+
+---
+
+## Maxine Drake: Instructor Introduction {.smaller}
+
+---
+
+## Dusty Turner: Assistant Introduction {.smaller}
+
+- **Engineer Officer**  
+  - Platoon Leader: Hawaii (Iraq)  
+  - Company Commander: White Sands Missile Range, NM (Afghanistan)
+
+- **Assistant Professor / Instructor**  
+  - United States Military Academy, West Point, NY
+
+- **Operations Research Systems Analyst (ORSA)**  
+  - Center for Army Analysis, Fort Belvoir, VA
+
+## Dusty Turner: Assistant Introduction {.smaller}
+
+- **Education**  
+  - BS Operations Research, United States Military Academy  
+  - MS Engineering Management, University of Missouri of Science and Technology  
+  - MS Integrated Systems Engineering, The Ohio State University  
+  - Applied Statistics Minor  
+  - Doctoral Candidate, Baylor University, Statistics (Expected 2025)
+
+- **Personal**  
+  - Married to Jill (2010)  
+  - Children: Cal (2013) and Reese (2015)
+
+---
+
+## Quick Introductions {.smaller}
+
+Let's go around the room for quick introductions:
+
+1. **Name**
+2. **Organization**
+3. **Current role**
+4. **Experience level with R and Shiny**
+5. **What you hope to achieve from this workshop**
+
+---
+
+## Link to Lesson Materials {.smaller}
+
+You can access the lesson materials and code examples for this workshop on GitHub:
+
+[Workshop GitHub Repository](https://github.com/maxinedrake/R_workshop)
+
+Please make sure to download the content and review it before starting.
+
+**SSH:**  
+```
+git clone git@github.com:maxinedrake/R_workshop.git
+```
+
+**HTTPS:**
+``` 
+https://github.com/maxinedrake/R_workshop.git
+```
+
+---
+
+## 8:00 AM - 9:00 AM: Welcome, Introductions & Setup
+
+---
+
+## 9:10 AM - 10:00 AM: Block 1 - Setting Up Your Environment
+
+---
+
+## 10:10 AM - 11:00 AM: Block 2 - Dashboard Design Principles
+
+---
+
+## 11:10 AM - 12:00 PM: Block 3 - Building Interactive Dashboards
+
+---
+
+## 12:00 PM - 1:00 PM: Lunch Break
+
+---
+
+## 1:00 PM - 1:50 PM: Block 4 - Data Organization
+
+---
+
+## 2:00 PM - 2:50 PM: Block 5 - Calendar Module
+
+---
+
+## 3:00 PM - 3:50 PM: Block 6 - Advanced Techniques & Final Q&A
+
+---
+
+## 4:00 PM - 5:00 PM: Hands-on Exercises & Project Work
+
+---
+
+## Summary & Wrap-Up

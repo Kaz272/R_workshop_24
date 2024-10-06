@@ -7,7 +7,7 @@ source(here::here("02_source", "dashboard_modules.R"))
 # UI ====================================
 
 ## Header --------------------------------
-header <- dashboardHeader(title = "Company Dashboard")
+header <- dashboardHeader(title = "WNBA Dashboard")
 
 
 ## Sidebar -------------------------------
@@ -17,7 +17,6 @@ sidebar <- dashboardSidebar(
     menuItem(text = "Calendar",icon = icon('calendar'),     tabName = 'calendar'),
     menuItem(text = "Manage Data",icon = icon('wrench'),    tabName = 'crud')
   )
-
 )
 
 ## Body ----------------------------------

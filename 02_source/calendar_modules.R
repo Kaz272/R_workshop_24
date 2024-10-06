@@ -8,7 +8,7 @@ calendar_ui <- function(id) {
   tabItem(tabName = "calendar",
           fluidRow(
             timevisOutput(ns("calendar"), width = "100%"),
-            box(width = 3,
+            box(width = 6,
                 uiOutput(ns("game_details"))
             )
           )

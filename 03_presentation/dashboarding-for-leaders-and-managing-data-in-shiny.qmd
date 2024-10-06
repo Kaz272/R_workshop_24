@@ -195,6 +195,10 @@ Download ZIP from website.
 <iframe width="1000" height="450" src="https://mastering-shiny.org/basic-reactivity.html"></iframe>
 ```
 
+## Shiny Reactivity
+
+Now, we'll open `R_Workshop > tutorial_reactives > app_reactives.R` and work from there. 
+
 ---
 
 ## Functions & Modules in Shiny
@@ -203,6 +207,10 @@ Download ZIP from website.
 ```{=html}
 <iframe width="1000" height="450" src="https://mastering-shiny.org/scaling-functions.html"></iframe>
 ```
+
+## Functions & Modules in Shiny
+
+Now, we'll open `R_Workshop > tutorial_modules > app_modules.R` and work from there. 
 
 ---
 

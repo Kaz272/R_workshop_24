@@ -1,8 +1,8 @@
 tictoc::toc()
 library(shinydashboard)
 
-source(here::here("understanding_modules", "module1.R"))
-source(here::here("understanding_modules", "module2.R"))
+source(here::here("tutorial_modules", "module1.R"))
+source(here::here("tutorial_modules", "module2.R"))
 
 # UI ====================================
 

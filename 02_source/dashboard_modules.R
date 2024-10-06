@@ -5,6 +5,7 @@ dashboard_ui <- function(id) {
   ns <- NS(id)
   
   tabItem(tabName = "dashboard",
+          h4("WNBA Stats and News as of October 5, 2024 6:00 PM"),
           # wide box, top of screen
           box(title = "Team Snapshot", width = 12,# wide box, top of screen
               column(width = 2, 

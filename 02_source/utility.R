@@ -50,6 +50,7 @@ news <- data.table::fread(here(... = "01_data", "table", "raw","latest_news.csv"
 theme_set(theme_minimal())
 team_conference_xwalk <- data.table::fread(here(... = "01_data", "table", "clean","team_meta.csv"))
 schedule_data <-  data.table::fread(here("01_data", "table", "raw", "wnba_season_schedule_2024.csv")) 
+player_stats <- data.table::fread(here(... = "01_data", "table", "raw","athlete_full.csv"))
 
 tictoc::toc()
 

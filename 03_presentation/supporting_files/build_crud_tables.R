@@ -1,10 +1,10 @@
 library(reactable)
 library(here)
 library(dplyr)
+
 reactable::reactable(data.frame(`Conference Name` = c("Western Conference", "Eastern Conference")), outlined = T)
 
 reactable::reactable(data.frame(`Team Name` = c("Atlanta Dream", "Dallas Wings", "Los Ange")))
-
 
 team_conference_xwalk <- data.table::fread(here(... = "01_data", "table", "clean","team_meta.csv"))
 

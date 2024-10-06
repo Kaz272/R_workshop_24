@@ -332,13 +332,19 @@
 
   <p class="date">DD October 2024</p>
 </section>
+<section class="slide level2">
+
+<!-- ATTENTION! -->
+
+<!-- To render this document, you must have {reactable} installed -->
+</section>
 <section id="welcome-to-the-workshop" class="slide level2">
 <h2>Welcome to the Workshop!</h2>
 <div class="columns">
 <div class="column" style="width:45%;">
 <h3 id="instructor"><strong>Instructor</strong></h3>
 <p><a href="https://www.linkedin.com/in/maxinedrake/">MAJ Maxine Drake</a></p>
-<p><img data-src="images/maxine.jpg" style="width:100.0%"></p>
+<p><img data-src="images/max-family.jpg" style="width:100.0%"></p>
 </div><div class="column" style="width:10%;">
 <p>&nbsp;</p>
 </div><div class="column" style="width:45%;">
@@ -348,15 +354,21 @@
 </div>
 </div>
 </section>
-<section id="workshop-goals" class="slide level2">
+<section id="workshop-goals" class="slide level2 smaller">
 <h2>Workshop Goals</h2>
 <p>By the end of this workshop, participants will leave with:</p>
 <ol type="1">
-<li>A functional dashboard template.</li>
-<li>An understanding of dashboard design principles.</li>
+<li>Functional Shiny application templates.</li>
+<li>An understanding of
+<ul>
+<li>Shiny reactivity</li>
+<li>Functions &amp; Modules in Shiny</li>
+<li>Dashboard design principles</li>
+<li>Multi-tiered architectures</li>
+<li>CRUD apps in R and Shiny</li>
+</ul></li>
 <li>A network of peers for collaboration.</li>
 <li>Enhanced skills in R and Shiny.</li>
-<li>Strategies for managing data using R.</li>
 </ol>
 </section>
 <section id="to-get-the-most-out-of-this-workshop" class="slide level2 smaller">
@@ -372,12 +384,10 @@
 </ul></li>
 <li><p><strong>Git experience</strong></p>
 <ul>
-<li>Basic understanding of Git for managing your codebase.<br>
-</li>
+<li>Basic understanding of Git for managing your codebase.</li>
 <li><a href="https://git-scm.com/downloads">Download Git (Official Website)</a></li>
 </ul></li>
 <li><p><strong>Basic R Shiny knowledge</strong></p></li>
-<li><p><strong>Data presentation basics</strong></p></li>
 <li><p><strong>Knowledge of your organization’s needs</strong></p></li>
 </ol>
 </section>
@@ -386,18 +396,15 @@
 <ul>
 <li><strong>8:00 AM - 9:00 AM</strong>: Welcome, Introductions &amp; Setup<br>
 </li>
-<li><strong>9:10 AM - 10:00 AM</strong>: Block 1 - Setting Up Your Environment<br>
+<li><strong>9:10 AM - 10:00 AM</strong>: Block 1 - Shiny Reactivity<br>
 </li>
-<li><strong>10:10 AM - 11:00 AM</strong>: Block 2 - Dashboard Design Principles<br>
-</li>
-<li><strong>11:10 AM - 12:00 PM</strong>: Block 3 - Building Interactive Dashboards<br>
+<li><strong>10:10 AM - 11:00 AM</strong>: Block 2 - Functions &amp; Modules in Shiny</li>
+<li><strong>11:10 AM - 12:00 PM</strong>: Block 3 - Dashboard Design Principles<br>
 </li>
 <li><strong>12:00 PM - 1:00 PM</strong>: Lunch<br>
 </li>
-<li><strong>1:00 PM - 1:50 PM</strong>: Block 4 - Data Organization<br>
-</li>
-<li><strong>2:00 PM - 2:50 PM</strong>: Block 5 - Calendar Module<br>
-</li>
+<li><strong>1:00 PM - 1:50 PM</strong>: Block 4 - Calendar Module</li>
+<li><strong>2:00 PM - 2:50 PM</strong>: Block 5 - CRUD apps in R and Shiny</li>
 <li><strong>3:00 PM - 3:50 PM</strong>: Block 6 - Advanced Techniques &amp; Final Q&amp;A<br>
 </li>
 <li><strong>4:00 PM - 5:00 PM</strong>: Hands-on Exercises &amp; Project Work</li>
@@ -405,6 +412,34 @@
 </section>
 <section id="maxine-drake-instructor-introduction" class="slide level2 smaller">
 <h2>Maxine Drake: Instructor Introduction</h2>
+<ul>
+<li><strong>Engineer Officer</strong>
+<ul>
+<li>Platoon Leader: North Carolina (and Afghanistan)<br>
+</li>
+<li>Company Commander: Leesville, LA</li>
+</ul></li>
+<li><strong>Operations Research Systems Analyst (ORSA)</strong>
+<ul>
+<li>Center for Army Analysis, Fort Belvoir, VA</li>
+<li>Futures &amp; Concepts Center, Fort Eustis, VA</li>
+</ul></li>
+</ul>
+</section>
+<section id="maxine-drake-instructor-introduction-1" class="slide level2 smaller">
+<h2>Maxine Drake: Instructor Introduction</h2>
+<ul>
+<li><strong>Education</strong>
+<ul>
+<li>BS Economics &amp; Russian, United States Military Academy<br>
+</li>
+<li>MS Operations Research, George Mason University</li>
+</ul></li>
+<li><strong>Personal</strong>
+<ul>
+<li>Married to Nate with 3 kids: Charlotte (9), Tommy (5), and Mikey (3)</li>
+</ul></li>
+</ul>
 </section>
 <section id="dusty-turner-assistant-introduction" class="slide level2 smaller">
 <h2>Dusty Turner: Assistant Introduction</h2>
@@ -461,40 +496,136 @@
 </section>
 <section id="link-to-lesson-materials" class="slide level2 smaller">
 <h2>Link to Lesson Materials</h2>
-<p>You can access the lesson materials and code examples for this workshop on GitHub:</p>
+<p>Please make sure to download and review the content and lesson materials before the workshop:</p>
 <p><a href="https://github.com/maxinedrake/R_workshop">Workshop GitHub Repository</a></p>
-<p>Please make sure to download the content and review it before starting.</p>
 <p><strong>SSH:</strong></p>
 <pre><code>git clone git@github.com:maxinedrake/R_workshop.git</code></pre>
 <p><strong>HTTPS:</strong></p>
 <pre><code>https://github.com/maxinedrake/R_workshop.git</code></pre>
+<p><strong>New to Git?</strong></p>
+<p>Download ZIP from website.</p>
+
+<img data-src="images/git-screenshot.png" style="width:30.0%" class="r-stretch"></section>
+<section id="welcome-introductions-setting-up-your-environment" class="slide level2">
+<h2>Welcome, Introductions &amp; Setting Up Your Environment</h2>
+<p><br></p>
+<h3 id="am---900-am">8:00 AM - 9:00 AM</h3>
 </section>
-<section id="am---900-am-welcome-introductions-setup" class="slide level2">
-<h2>8:00 AM - 9:00 AM: Welcome, Introductions &amp; Setup</h2>
+<section id="shiny-reactivity" class="slide level2">
+<h2>Shiny Reactivity</h2>
+<h6 id="mastering-shiny-by-hadley-wickham"><a href="https://mastering-shiny.org/">Mastering Shiny by Hadley Wickham</a></h6>
+<iframe width="1000" height="450" src="https://mastering-shiny.org/basic-reactivity.html"></iframe>
 </section>
-<section id="am---1000-am-block-1---setting-up-your-environment" class="slide level2">
-<h2>9:10 AM - 10:00 AM: Block 1 - Setting Up Your Environment</h2>
+<section id="functions-modules-in-shiny" class="slide level2">
+<h2>Functions &amp; Modules in Shiny</h2>
+<h6 id="mastering-shiny-by-hadley-wickham-1"><a href="https://mastering-shiny.org/">Mastering Shiny by Hadley Wickham</a></h6>
+<iframe width="1000" height="450" src="https://mastering-shiny.org/scaling-functions.html"></iframe>
 </section>
-<section id="am---1100-am-block-2---dashboard-design-principles" class="slide level2">
-<h2>10:10 AM - 11:00 AM: Block 2 - Dashboard Design Principles</h2>
+<section id="dashboard-design-principles" class="slide level2 smaller">
+<h2>Dashboard Design Principles</h2>
+<p>Effective dashboard design ensures that the audience can quickly absorb critical information and make informed decisions. Here are the key principles:</p>
+<!-- <br> -->
+<h4 id="understand-the-purpose-audience-and-context">1. <strong>Understand the <em>Purpose</em>, <em>Audience</em> and <em>Context</em> </strong></h4>
+<div class="columns">
+<div class="column" style="width:45%;">
+<h4 id="simple-clear-visual-elements">2. <strong>Simple &amp; Clear Visual Elements</strong></h4>
+<ul>
+<li>Opt for simple and effective visualizations.</li>
+<li>Too many graphs or charts = cognitive overload.</li>
+<li>Consider interactivity so the user can explore.</li>
+</ul>
+</div><div class="column" style="width:55%;">
+<p><span style="float:right"><font size="2"><a href="https://www.tapclicks.com/blog/data-visualization-types">https://www.tapclicks.com/blog/data-visualization-types</a></font></span></p>
+<p><img data-src="images/types-of-visuals.jpg" style="width:100.0%"></p>
+</div>
+</div>
 </section>
-<section id="am---1200-pm-block-3---building-interactive-dashboards" class="slide level2">
-<h2>11:10 AM - 12:00 PM: Block 3 - Building Interactive Dashboards</h2>
+<section id="dashboard-design-principles-1" class="slide level2 smaller">
+<h2>Dashboard Design Principles</h2>
+<p><br></p>
+<h5 id="prioritization-of-information">3. <strong>Prioritization of Information</strong></h5>
+<ul>
+<li>Ensure that decision-making data is accessible at a glance.</li>
+<li>Use size, position, and color to draw attention to key metrics.</li>
+</ul>
+<p><br></p>
+<h5 id="balance-timely-data-against-speed-of-app">4. <strong>Balance Timely Data against Speed of App</strong></h5>
+<ul>
+<li>Minimize data operations within app session</li>
+<li>Maximize user’s ability to see timely data</li>
+<li>What does “Timely Data” mean for you projects?</li>
+</ul>
 </section>
-<section id="pm---100-pm-lunch-break" class="slide level2">
-<h2>12:00 PM - 1:00 PM: Lunch Break</h2>
+<section id="dashboard-design-principles-2" class="slide level2 smaller">
+<h2>Dashboard Design Principles</h2>
+<p><br></p>
+<h5 id="consistency">5. <strong>Consistency</strong></h5>
+<ul>
+<li>Consistent formatting, fonts, and <strong>color</strong> schemes.</li>
+<li>Consistent types of charts for similar types of data to foster familiarity.</li>
+</ul>
+<p><br></p>
+<h5 id="accessibility">6. <strong>Accessibility</strong></h5>
+<ul>
+<li>Ensure the dashboard is easy to use, even for individuals who may not be highly technical.</li>
+<li>Use color contrast and design elements that are accessible to all users, including those with visual impairments.</li>
+<li>Provide tooltips or brief explanations for more complex metrics.</li>
+</ul>
 </section>
-<section id="pm---150-pm-block-4---data-organization" class="slide level2">
-<h2>1:00 PM - 1:50 PM: Block 4 - Data Organization</h2>
+<section id="dashboard-design-principles-3" class="slide level2 smaller">
+<h2>Dashboard Design Principles</h2>
+<h4 id="resources">Resources</h4>
+<ul>
+<li><p>“The Visual Display of Quantitative Information” by Edward Tufte A classic, emphasizing clarity, precision, and efficiency in visualizing data.</p></li>
+<li><p>“Storytelling with Data: A Data Visualization Guide for Business Professionals” by Cole Nussbaumer Knaflic<br>
+Practical tips for using data visualization as a communication tool, with a focus on business.</p></li>
+<li><p>“Information Dashboard Design: Displaying Data for At-a-Glance Monitoring” by Stephen Few<br>
+Guidelines for creating clear and actionable dashboards that allow users to quickly grasp insights.</p></li>
+<li><p><a href="https://medium.com/@mokkup/8-essential-dashboard-design-principles-for-effective-data-visualization-40653c5fd135">8 Essential Dashboard Design Principles for Effective Data Visualization</a></p></li>
+</ul>
 </section>
-<section id="pm---250-pm-block-5---calendar-module" class="slide level2">
-<h2>2:00 PM - 2:50 PM: Block 5 - Calendar Module</h2>
+<section id="lunch-break" class="slide level2">
+<h2>Lunch Break</h2>
+<h3 id="pm---100-pm">12:00 PM - 1:00 PM</h3>
 </section>
-<section id="pm---350-pm-block-6---advanced-techniques-final-qa" class="slide level2">
-<h2>3:00 PM - 3:50 PM: Block 6 - Advanced Techniques &amp; Final Q&amp;A</h2>
+<section id="calendars-in-shiny" class="slide level2 smaller">
+<h2>Calendars in Shiny</h2>
+<ul>
+<li><a href="https://github.com/daattali/timevis">{timevis}</a>: Allows you to build interactive timelines in Shiny or Quarto. Based on the ‘vis.js’ Timeline JavaScript library.</li>
+</ul>
+<iframe width="1200" height="460" src="https://daattali.com/shiny/timevis-demo/"></iframe>
 </section>
-<section id="pm---500-pm-hands-on-exercises-project-work" class="slide level2">
-<h2>4:00 PM - 5:00 PM: Hands-on Exercises &amp; Project Work</h2>
+<section id="crud-apps-in-r-and-shiny" class="slide level2">
+<h2>CRUD Apps in R and Shiny</h2>
+<h3 id="start-with-your-logical-model">Start with your logical model</h3>
+<p><img data-src="images/logical-model.png"></p>
+<h3 id="design-crud-tables">Design CRUD tables</h3>
+<p><img data-src="images/crud_conferences.png" style="width:12.0%"> <img data-src="images/crud_teams.png" style="width:35.0%"> <img data-src="images/crud_players.png" style="width:35.0%"></p>
+</section>
+<section id="crud-apps-in-r-and-shiny-1" class="slide level2 smaller">
+<h2>CRUD Apps in R and Shiny</h2>
+<ul>
+<li>Use {rhandsontable}, {reactable}, or {DT} to display selectable/editable tables</li>
+<li>Control user submissions through <code>shiny::actionButton</code>s</li>
+<li>Validate user input using functions, such as <code>shiny::req</code>, <code>shiny::validate</code>, <code>shinyfeedback::feedback</code>, and <code>shiny::showNotification</code></li>
+<li>A CRUD app could have the following key steps:
+<ol type="1">
+<li>Read in data</li>
+<li>Join and transform data into user table(s), using a function</li>
+<li>Make your user table to a reactive object, using <code>reactiveValues</code></li>
+<li>Upon user submission, there are two subprocesses:</li>
+</ol>
+<ul>
+<li>Transform submission back into original raw table structure, using a function, then write to data</li>
+<li>Update your reactive user table with submission</li>
+</ul></li>
+</ul>
+</section>
+<section id="advanced-techniques-final-qa" class="slide level2">
+<h2>Advanced Techniques &amp; Final Q&amp;A</h2>
+</section>
+<section id="hands-on-exercises-project-work" class="slide level2">
+<h2>Hands-on Exercises &amp; Project Work</h2>
 </section>
 <section id="summary-wrap-up" class="slide level2">
 <h2>Summary &amp; Wrap-Up</h2>

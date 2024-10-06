@@ -5,23 +5,31 @@ dashboard_ui <- function(id) {
   ns <- NS(id)
   
   tabItem(tabName = "dashboard",
-          box(width = 4, status = 'primary', solidHeader = TRUE,title = "Winning Percentage", p("a little table of the top 3 teams")),
-          box(width = 4, status = 'danger', solidHeader = TRUE,title = "Wins", p("a little table of the top 3 teams")),
-          box(width = 4, status = 'primary',solidHeader = TRUE, title = "Losses", p("a little table of the top 3 teams")),
-          box(title = h2("Stats",  tags$style ('h2 {margin-top: 0;}')),
-            width = 9,height = '650px',  #tags$style ('.box-header {padding-top: 0; margin-top: 0; border: 0px white}'),
-            column(width = 2,
-                   radioButtons(inputId = ns("team_or_player"),label = "Player Stats or Team Stats", choices = c("Player","Team")),
-                   uiOutput(outputId = ns("stat_selector"))
-            ),
-            column(width = 10,
-                   plotOutput(outputId = ns("stat_plot"),height = '545px')
-            )
+          # wide box, top of screen
+          box(title = "Team Snapshot", width = 12,# wide box, top of screen
+              column(width = 2, 
+                     uiOutput(ns("team_selector"))
+                     ),
+              column(width = 1,
+                     uiOutput(ns("team_logo"))
+                     ),
+              column(width = 9, 
+                     uiOutput(ns("team_snapshot"))
+                     )
           ),
-          box(title = "Last Week's Scoreboard", width = 3,
-          uiOutput(outputId = ns("recent_games")),
+          # Large box in middle with bar chart
+          box(title = "League Stats", width = 9,height = '550px',
+              column(width = 2,
+                     uiOutput(outputId = ns("stat_selector"))
+              ),
+              column(width = 10,
+                     plotOutput(outputId = ns("stat_plot"),height = '450px')
+              )
           ),
-          uiOutput(ns("news"))
+          box(title = "Last Week's Scoreboard", width = 3, # box on right with recent games & scores
+              uiOutput(outputId = ns("recent_games")),
+          ),
+          uiOutput(ns("news")) # all the news headlines below the bar chart
   ) 
 }
 
@@ -32,8 +40,64 @@ dashboard_server <- function(id) {
     function(input, output, session) {
       ns <- session$ns
       
-      # Recent Games ---------------------------------
-      # function to build a reactable for last n games that took place in the last 6 days
+      # Team Snapshot ===========================
+      
+      ## Team Selector -----------------------------
+      
+      # get unique team names
+      team_options <-
+     team_stats %>% 
+        distinct(team_name, team_rank) %>% 
+        arrange(team_rank) %>% 
+        pull(team_name)
+      
+      # create team selector
+      output$team_selector <- renderUI({
+        selectInput(inputId = ns("team_selection"),
+                    label = "Select a Team", 
+                    choices = team_options, 
+                    selected = team_options[1],
+                    width = '100%')
+      })
+      
+      ## React to team selection --------------------------
+      team_snapshot_values <- reactive({
+        req(input$team_selection) #this ensures input$team_selection is not null. If a selection doesn't exist, the reactive will stop here.
+        
+        team_win_loss <- wins_losses_by_team %>% 
+          filter(team_name == input$team_selection) 
+        
+        wins <- team_win_loss %>% filter(winner) %>% pull(n)
+        losses <- team_win_loss %>% filter(!winner) %>% pull(n)
+        win_loss_perc <- paste0( round(100 * wins / (wins+losses), 1), "%")
+        team_id <- team_win_loss %>% pull(team_id) %>% .[1]
+        
+        return(list(wins = wins, #returning a list of reactive values
+                    losses = losses,
+                    win_loss_perc = win_loss_perc,
+                    team_id = team_id))
+      })
+      
+      ## Build team snapshot UI ----------------------------
+      
+      # Build logo UI
+      output$team_logo <- renderUI({
+        img(src = paste0("team/",team_snapshot_values()$team_id,".png"), width = "100%",
+             alt = "alternative text")
+      })
+      
+      # Build team value boxes 
+      output$team_snapshot <- renderUI({
+        tagList( 
+          valueBox(value = team_snapshot_values()$wins, color = 'blue', subtitle = "Wins", width = 4),
+          valueBox(value = team_snapshot_values()$losses, color = 'maroon', subtitle = "Losses", width = 4),
+          valueBox(value = team_snapshot_values()$win_loss_perc, color = 'blue', subtitle = "Win-Loss %", width = 4)
+        )
+      })
+      
+      # Recent Games ===========================================
+      
+      # function to build a reactable for n games that took place in the last 6 days
       create_recent_game_box <- function(two_row_game_tbl){ # two_row_game_tbl is a two row tibble for a single game. One row for each competitor. 
         date <- ymd_hm(two_row_game_tbl$date[1]) %>% format("%A, %B %d, %Y") 
         
@@ -41,7 +105,7 @@ dashboard_server <- function(id) {
             two_row_game_tbl %>% 
               select(team_name, team_score) %>% 
               reactable::reactable(
-                columns = list(
+                columns = list( # Within this list, I will call out specific columns and use the colDef function to specify attributes
                   team_name = colDef(name = date,
                                      cell = function(value, index) {
                                        file_name <- two_row_game_tbl$team_id[index]
@@ -49,10 +113,13 @@ dashboard_server <- function(id) {
                                                       alt = value,
                                                       width = '7%'), value)}
                   ),
-                  team_score = colDef(name = '',width=40,style = "font-weight: 800")
-                ),height = '84px',compact = T
-              )#, # end reactable
-            # br() # add separation between this iteration and the next iteration
+                  team_score = colDef(name = '',
+                                      width=40,
+                                      style = "font-weight: 800")
+                ),
+                height = '84px',
+                compact = T
+              ) # end reactable
         ) # end div
       } # end create_recent_game_box function
       
@@ -62,65 +129,67 @@ dashboard_server <- function(id) {
           select(id, team_id, shortName, team_name = displayName, date, team_score) %>% 
           distinct_all() %>% 
           # mutate(nrow = nrow(.)/2) %>% 
-          group_split(id) %>%
-          purrr::map(create_recent_game_box)
-      })
+          group_split(id) %>% # at this point, I have a list of two-row dataframes
+          purrr::map(create_recent_game_box) #map the create_recent_game_box function to each element in the list. 
+        # the outcome of this is a list of UI (reactable tables)
+      }) 
       
-      # Main Bar Chart ------------------------------------------
       
-      ## stat_option reactive ----------------------
+      
+      # Main Bar Chart =====================================
+      
+      ## Stat Selector ----------------------
+      
       # Set reactive object based on user's selection to see player or team stats
-      stat_options <- reactive({
-        if(input$team_or_player=="Player"){
-          s <- team_stats %>% pull(stat_display_name) %>% unique()
-        }else{
-          s <- team_stats %>% pull(stat_display_name) %>% unique()
-        }
-        message(s)
-        return(s)
-      })
+      stat_options <- team_stats %>% pull(stat_display_name) %>% unique()
       
-      ## Stat Dropdown ----------------
-      # Built stat dropdown that allows user to select stat
+      # Build stat selector
       output$stat_selector <- renderUI({
-        selectInput(inputId = ns("stat_selection"), label = "Select a Stat", choices = stat_options(), selected = "Points")
+        selectInput(inputId = ns("stat_selection"), label = "Select a Stat", choices = stat_options, selected = "Points")
       })
       
-      ## for_plot reactives ----------------------------
+      ## React to stat selector ----------------------------
       for_plot <- reactive({
         message('begin for_plot')
         req(input$stat_selection)
         
-        data <- team_stats %>% 
-          filter(stat_display_name == input$stat_selection )
-        message('mid for_plot')
+        data <- team_stats %>%
+          filter(stat_display_name == input$stat_selection ) %>%
+          mutate(selected = ifelse(team_name==input$team_selection, "selected", "not selected")) %>%  # this will give me a TRUE for the selected team. I'll use this in the color aesthetic in my ggplot
+          arrange(desc(team_rank)) %>% 
+          mutate(team_name = factor(team_name, team_name))
+          
         y_offset <- data %>% 
           pull(stat_value) %>% 
           mean/16
+        
         message('end for_plot')
         return(list(data= data, y_offset = y_offset))
       })
       
-      ## Plot --------------------------------------
+      ## Build Plot --------------------------------------
       output$stat_plot <- renderPlot({
         # print(for_plot()$data )
         for_plot()$data %>%
           ggplot(aes(x = fct_reorder(team_name,team_rank), y = stat_value)) +
-          geom_col(aes(fill = team_name)) +
-          geom_image(aes(y = for_plot()$y_offset*1.1, image=team_logo_filename), size = 0.19) +
+          geom_col(aes(fill = team_name, alpha = selected)) +
+          geom_image(aes(y = for_plot()$y_offset*1.1, image=team_logo_filename), size = 0.15) +
           geom_text(aes(y = stat_value + for_plot()$y_offset, label = round(stat_value, 0)),size = 18, size.unit = 'pt') +
-        scale_fill_manual(values =unique(for_plot()$data$color_hex) ) +
-        theme(legend.position = 'none',
-              axis.text = element_text(size = rel(1.4)),
-              axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
-              title = element_text(size = rel(1.6))
-              ) +
-        labs(title = for_plot()$data$stat_display_name[1],
-             y = for_plot()$data$stat_display_name[1],
-             x = 'Team')
-    })
+          scale_fill_manual(values =unique(for_plot()$data$color_hex) ) +
+          scale_alpha_manual(values = c(.3,1)) + 
+          theme(legend.position = 'none',
+                axis.text = element_text(size = rel(1.4)),
+                axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
+                title = element_text(size = rel(1.6))
+          ) +
+          labs(title = for_plot()$data$stat_display_name[1],
+               y = for_plot()$data$stat_display_name[1],
+               x = 'Team')
+      })
       
-      # News ---------------------------------------------
+      # News ================================================
+      
+      # define function to build news UI
       create_news_box <- function(title, description, news_image_filepath, news_link){
         news_box <- box(title = title, width=4,
                         tags$a(
@@ -128,17 +197,17 @@ dashboard_server <- function(id) {
                           tags$img(src = news_image_filepath,
                                    alt = title,
                                    width = '100%'),
-                        p(description)
+                          p(description)
                         ),
         )
         return(news_box)
       }
       
-      # Build news UI by mapping create_news_box to all news records
+      # Build several news boxes by mapping create_news_box to each row in a news dataframe
       output$news <- renderUI({
         news %>% 
           distinct(title, description, news_image_filepath, news_link) %>% 
-          purrr::pmap(create_news_box) 
+          purrr::pmap(create_news_box) # iterate over multiple arguments simultaneously. Function arguments correspond to column names in the dataframe.
       })
       
     }#end module function

@@ -4,7 +4,7 @@ library(httr)
 library(jsonlite)
 library(here)
 library(tidyjson)
-
+library(tidygeocoder)
 # helper functions ------------------------
 download_image <- function(id, url, category){
   file_type <- str_sub(url, -3,-1)
@@ -259,12 +259,14 @@ return(athlete_tbl)
 }
 }
 
+## Get all athlete data -----------------
+
 # get athlete api endpoints
 athlete_APIs <- get_athlete_APIs()
 
 # run those endpoints through the get_athlete_data function
 
-all_athlete_data <- athlete_APIs %>% 
+all_athlete_data <- athlete_APIs %>%
   purrr::map_dfr(get_athlete_data)
 
 
@@ -285,8 +287,13 @@ headshot_filepaths <-
   rename(player_headshot_filename = value) %>% 
   distinct(athlete_id, .keep_all = T)
 
-all_athlete_data %>% 
-  left_join(headshot_filepaths %>% mutate(athlete_id = as.character(athlete_id)), relationship = 'many-to-many') %>% 
+all_athlete_joined <- 
+  all_athlete_data %>%#select(team) %>%  
+  mutate(team_id = str_remove_all(team, "http://sports.core.api.espn.com/v2/sports/basketball/leagues/wnba/seasons/2024/teams/|\\?(.*)")) %>% 
+  left_join(headshot_filepaths %>% 
+              mutate(athlete_id = as.character(athlete_id)), relationship = 'many-to-many') 
+
+all_athlete_joined %>% 
   data.table::fwrite(here(... = "01_data", "table", "raw","athlete_full.csv"))
 
 
@@ -427,7 +434,9 @@ season_schedule_trimmed <-
             by = c("team_id"  = "id")) %>% 
   left_join(team_meta %>%
               distinct(id, displayName),
-            by = c("team_id" = "id"))
+            by = c("team_id" = "id"))  %>% 
+  geocode(city = city, state = state)
+
 
 season_schedule_trimmed %>% data.table::fwrite(here("01_data", "table", "raw", "wnba_season_schedule_2024.csv"))
 
@@ -508,14 +517,17 @@ upcoming_games <-
 upcoming_games %>% data.table::fwrite(here("01_data","table","clean", "clean_upcoming_games.csv"))
 
 ## total wins and losses by team ----------------------------
-wins_losses_by_team <- season_schedule_trimmed %>% 
+wins_losses_by_team <-
+  season_schedule_trimmed %>% 
   filter(date < today()) %>% 
+  distinct(id,team_id,team_score) %>% 
   group_by(id) %>% 
   mutate(winner = max(team_score )==team_score) %>% 
-  ungroup()  %>% 
+  ungroup()  %>%
   left_join(raw_teams_full %>%
               distinct(team_id, team_name) ) %>% 
-  count(team_name, winner)
+  filter(!is.na(team_name)) %>% 
+  count(team_id, team_name, winner) 
 
 wins_losses_by_team %>% data.table::fwrite(here("01_data","table","clean", "wins_losses_by_team.csv"))
 

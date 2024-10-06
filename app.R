@@ -27,7 +27,7 @@ body <- dashboardBody(
     dashboard_ui("dashboard"),
     calendar_ui("calendar"),
     crud_ui("crud")
-  )#,
+  )
 )
 
 ## UI Consolidated -----------------------
@@ -37,6 +37,7 @@ ui <- dashboardPage(
   sidebar = sidebar,
   body = body
 )
+
 
 # Server ==================================
 server <- function(input, output, session) {

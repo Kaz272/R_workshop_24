@@ -1,5 +1,6 @@
 library(reactable)
 library(timevis)
+library(ggmap)
 calendar_ui <- function(id) {
   
   ns <- NS(id)
@@ -21,14 +22,11 @@ calendar_server <- function(id) {
     function(input, output, session) {
       ns <- session$ns
       
-      df <- tibble(id = 1:5, 
-                   content = str_c("event ", 1:5),
-                   start = seq.Date(from = ymd(20240917),to =  ymd(20240921),by = "day")
-      )
-      
+      # Read Data ---------------
       schedule_data <- 
-        data.table::fread(here("01_data", "table", "raw", "wnba_season_schedule_2024.csv")) 
+        data.table::fread(here("01_data", "table", "raw", "wnba_season_schedule_2024.csv"))
       
+      # Prep Data ---------------
       schedule_for_timevis <-
         schedule_data %>% 
         select(id, start = date, content = shortName) %>% 
@@ -38,16 +36,21 @@ calendar_server <- function(id) {
           type = NA
         )
       
+      message("finished reading and prepping schedule data")
+      
+      # Build calendar --------------------
       output$calendar <- renderTimevis({
         timevis(
           schedule_for_timevis,
           timezone = -4
         ) %>% 
-          setWindow(Sys.Date()-13,Sys.Date()+6)
+          setWindow(as.Date("09/25/2024", "%m/%d/%Y"),as.Date("10/11/2024", "%m/%d/%Y"))
       })
       
+      # React to calendar selection -----------------
       selected_game_details <- reactive({
         req(input$calendar_selected)
+        message("calendar item selected")
         game_data <- schedule_data %>%
           filter(id == input$calendar_selected)%>%
           select(date, broadcast, shortName,city, state, team_id, game_stat_value, game_stat_display_name, team_score) %>% 
@@ -60,7 +63,7 @@ calendar_server <- function(id) {
         date <- (ymd_hm(game_data$date[1])-hours(4)) %>% format("%A, %B %d, %Y, %H:%m") %>% paste0(., " EST")
         location <- paste0(game_data$city[1], ", ", game_data$state[1])
         broadcasting_on <-  game_data$broadcast[1]
-        
+        future_game <- ifelse(ymd_hm(game_data$date[1])>ymd(20241005),"Historical Team Stats", "Game Stats")
         
         game_stats <-
           game_data %>%
@@ -77,25 +80,30 @@ calendar_server <- function(id) {
                     date = date, 
                     location = location, 
                     broadcasting_on = broadcasting_on, 
-                    game_stats = game_stats))
+                    game_stats = game_stats, 
+                    future_game = future_game))
       })
       
-      create_game_details_ui <- function(full_name, date,location, broadcasting_on,game_stats){
+      # Define function to build game stats UI --------------------
+      create_game_details_ui <- function(full_name, date,location, broadcasting_on,game_stats, future_game){
         tagList(
           h2(full_name),
           h4(date),
           h4(location),
           h5(broadcasting_on),
+          h4(future_game),
           game_stats
         )
       }
       
+      # Build game stats UI
       output$game_details <- renderUI({
         create_game_details_ui(selected_game_details()$full_name, 
                                selected_game_details()$date, 
                                selected_game_details()$location,
                                selected_game_details()$broadcasting_on,
-                               selected_game_details()$game_stats)
+                               selected_game_details()$game_stats,
+                               selected_game_details()$future_game)
       })
       
     } # end module function

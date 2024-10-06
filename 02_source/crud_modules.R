@@ -33,7 +33,9 @@ crud_server <- function(id) {
                          "integer",
                          "character",
                          "character",
-                         "character")) 
+                         "character",
+                         "double",
+                         "double")) 
       
       schedule_data_modified <-
       schedule_data %>% as_tibble() %>% 

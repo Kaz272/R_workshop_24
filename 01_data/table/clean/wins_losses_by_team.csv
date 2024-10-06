@@ -1,27 +1,25 @@
-team_name,winner,n
-Atlanta Dream,FALSE,1856
-Atlanta Dream,TRUE,960
-Chicago Sky,FALSE,1792
-Chicago Sky,TRUE,896
-Connecticut Sun,FALSE,896
-Connecticut Sun,TRUE,1856
-Dallas Wings,FALSE,1664
-Dallas Wings,TRUE,960
-Indiana Fever,FALSE,1344
-Indiana Fever,TRUE,1472
-Las Vegas Aces,FALSE,896
-Las Vegas Aces,TRUE,1856
-Los Angeles Sparks,FALSE,1984
-Los Angeles Sparks,TRUE,704
-Minnesota Lynx,FALSE,896
-Minnesota Lynx,TRUE,1984
-New York Liberty,FALSE,832
-New York Liberty,TRUE,2048
-Phoenix Mercury,FALSE,1472
-Phoenix Mercury,TRUE,1344
-Seattle Storm,FALSE,1216
-Seattle Storm,TRUE,1600
-Washington Mystics,FALSE,1728
-Washington Mystics,TRUE,960
-,FALSE,64
-,TRUE,64
+team_id,team_name,winner,n
+11,Phoenix Mercury,FALSE,23
+11,Phoenix Mercury,TRUE,21
+14,Seattle Storm,FALSE,19
+14,Seattle Storm,TRUE,25
+16,Washington Mystics,FALSE,27
+16,Washington Mystics,TRUE,15
+17,Las Vegas Aces,FALSE,16
+17,Las Vegas Aces,TRUE,29
+18,Connecticut Sun,FALSE,16
+18,Connecticut Sun,TRUE,30
+19,Chicago Sky,FALSE,28
+19,Chicago Sky,TRUE,14
+20,Atlanta Dream,FALSE,29
+20,Atlanta Dream,TRUE,15
+3,Dallas Wings,FALSE,26
+3,Dallas Wings,TRUE,15
+5,Indiana Fever,FALSE,21
+5,Indiana Fever,TRUE,23
+6,Los Angeles Sparks,FALSE,31
+6,Los Angeles Sparks,TRUE,11
+8,Minnesota Lynx,FALSE,15
+8,Minnesota Lynx,TRUE,33
+9,New York Liberty,FALSE,13
+9,New York Liberty,TRUE,34

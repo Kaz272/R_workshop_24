@@ -11,6 +11,9 @@ scroll: true
 github-repo: "https://github.com/maxinedrake/R_workshop"
 ---
 
+<!-- ATTENTION! -->
+<!-- To render this document, you must have {reactable} installed -->
+
 
 ## Welcome to the Workshop!
 
@@ -19,7 +22,7 @@ github-repo: "https://github.com/maxinedrake/R_workshop"
 ### **Instructor**  
 [MAJ Maxine Drake](https://www.linkedin.com/in/maxinedrake/)
 
-![](images/maxine.jpg){width=100%}
+![](images/max-family.jpg){width=100%}
 :::
 
 ::: {.column width="10%"}
@@ -36,16 +39,19 @@ github-repo: "https://github.com/maxinedrake/R_workshop"
 
 ---
 
-## Workshop Goals 
+## Workshop Goals {.smaller} 
 
 By the end of this workshop, participants will leave with:
 
-1. A functional dashboard template.
-2. An understanding of dashboard design principles.
+1. Functional Shiny application templates.
+2. An understanding of 
+   * Shiny reactivity
+   * Functions & Modules in Shiny
+   * Dashboard design principles
+   * Multi-tiered architectures
+   * CRUD apps in R and Shiny
 3. A network of peers for collaboration.
 4. Enhanced skills in R and Shiny.
-5. Strategies for managing data using R.
-
 ---
 
 ## To Get the Most Out of This Workshop {.smaller}
@@ -57,14 +63,12 @@ By the end of this workshop, participants will leave with:
    - [Download RStudio (Official Website)](https://posit.co/download/rstudio-desktop/)  
 
 3. **Git experience**  
-   - Basic understanding of Git for managing your codebase.  
+   - Basic understanding of Git for managing your codebase. 
    - [Download Git (Official Website)](https://git-scm.com/downloads)
 
 4. **Basic R Shiny knowledge**
 
-5. **Data presentation basics**
-
-6. **Knowledge of your organization’s needs**  
+5. **Knowledge of your organization’s needs**  
 
 ---
 
@@ -83,21 +87,35 @@ github-repo: "https://github.com/maxinedrake/R_workshop"
 ## Workshop Agenda Overview {.smaller}
 
 - **8:00 AM - 9:00 AM**: Welcome, Introductions & Setup  
-- **9:10 AM - 10:00 AM**: Block 1 - Setting Up Your Environment  
-- **10:10 AM - 11:00 AM**: Block 2 - Dashboard Design Principles  
-- **11:10 AM - 12:00 PM**: Block 3 - Building Interactive Dashboards  
+- **9:10 AM - 10:00 AM**: Block 1 - Shiny Reactivity  
+- **10:10 AM - 11:00 AM**: Block 2 - Functions & Modules in Shiny 
+- **11:10 AM - 12:00 PM**: Block 3 - Dashboard Design Principles  
 - **12:00 PM - 1:00 PM**: Lunch  
-- **1:00 PM - 1:50 PM**: Block 4 - Data Organization  
-- **2:00 PM - 2:50 PM**: Block 5 - Calendar Module  
+- **1:00 PM - 1:50 PM**: Block 4 - Calendar Module 
+- **2:00 PM - 2:50 PM**: Block 5 - CRUD apps in R and Shiny
 - **3:00 PM - 3:50 PM**: Block 6 - Advanced Techniques & Final Q&A  
 - **4:00 PM - 5:00 PM**: Hands-on Exercises & Project Work  
-
 
 ---
 
 ## Maxine Drake: Instructor Introduction {.smaller}
 
----
+- **Engineer Officer**  
+  - Platoon Leader: North Carolina (and Afghanistan)  
+  - Company Commander: Leesville, LA
+
+- **Operations Research Systems Analyst (ORSA)**  
+  - Center for Army Analysis, Fort Belvoir, VA
+  - Futures & Concepts Center, Fort Eustis, VA
+
+## Maxine Drake: Instructor Introduction {.smaller}
+
+- **Education**  
+  - BS Economics & Russian, United States Military Academy  
+  - MS Operations Research, George Mason University  
+
+- **Personal**  
+  - Married to Nate with 3 kids: Charlotte (9), Tommy (5), and Mikey (3)
 
 ## Dusty Turner: Assistant Introduction {.smaller}
 
@@ -140,11 +158,9 @@ Let's go around the room for quick introductions:
 
 ## Link to Lesson Materials {.smaller}
 
-You can access the lesson materials and code examples for this workshop on GitHub:
+Please make sure to download and review the content and lesson materials before the workshop: 
 
 [Workshop GitHub Repository](https://github.com/maxinedrake/R_workshop)
-
-Please make sure to download the content and review it before starting.
 
 **SSH:**  
 ```
@@ -156,41 +172,160 @@ git clone git@github.com:maxinedrake/R_workshop.git
 https://github.com/maxinedrake/R_workshop.git
 ```
 
----
+**New to Git?**
 
-## 8:00 AM - 9:00 AM: Welcome, Introductions & Setup
+Download ZIP from website.
 
----
-
-## 9:10 AM - 10:00 AM: Block 1 - Setting Up Your Environment
+![](images/git-screenshot.png){width=30%}
 
 ---
 
-## 10:10 AM - 11:00 AM: Block 2 - Dashboard Design Principles
+## Welcome, Introductions & Setting Up Your Environment
+<br>
+
+### 8:00 AM - 9:00 AM
 
 ---
 
-## 11:10 AM - 12:00 PM: Block 3 - Building Interactive Dashboards
+## Shiny Reactivity
+
+###### [Mastering Shiny by Hadley Wickham](https://mastering-shiny.org/)  
+
+```{=html}
+<iframe width="1000" height="450" src="https://mastering-shiny.org/basic-reactivity.html"></iframe>
+```
 
 ---
 
-## 12:00 PM - 1:00 PM: Lunch Break
+## Functions & Modules in Shiny
+
+###### [Mastering Shiny by Hadley Wickham](https://mastering-shiny.org/)  
+```{=html}
+<iframe width="1000" height="450" src="https://mastering-shiny.org/scaling-functions.html"></iframe>
+```
 
 ---
 
-## 1:00 PM - 1:50 PM: Block 4 - Data Organization
+## Dashboard Design Principles {.smaller}
+
+Effective dashboard design ensures that the audience can quickly absorb critical information and make informed decisions. Here are the key principles:
+
+<!-- <br> -->
+
+#### 1. **Understand the *Purpose*, *Audience* and *Context* **
+
+:::{.columns}
+::: {.column width="45%"}
+#### 2. **Simple & Clear Visual Elements**
+   - Opt for simple and effective visualizations.
+   - Too many graphs or charts = cognitive overload.
+   - Consider interactivity so the user can explore.
+:::
+
+::: {.column width="55%"}
+<span style="float:right"><font size = "2">[https://www.tapclicks.com/blog/data-visualization-types](https://www.tapclicks.com/blog/data-visualization-types)</font></span>
+
+![](images/types-of-visuals.jpg){width=100%}
+
+:::
+
+:::
+
+## Dashboard Design Principles {.smaller}
+
+<br>
+
+##### 3. **Prioritization of Information**
+   - Ensure that decision-making data is accessible at a glance.
+   - Use size, position, and color to draw attention to key metrics.
+
+<br>
+
+##### 4. **Balance Timely Data against Speed of App**
+   - Minimize data operations within app session
+   - Maximize user's ability to see timely data 
+   - What does "Timely Data" mean for you projects? 
+
+## Dashboard Design Principles {.smaller}
+
+<br>
+
+##### 5. **Consistency**
+   - Consistent formatting, fonts, and **color** schemes.
+   - Consistent types of charts for similar types of data to foster familiarity.
+
+<br>
+
+##### 6. **Accessibility**
+   - Ensure the dashboard is easy to use, even for individuals who may not be highly technical.
+   - Use color contrast and design elements that are accessible to all users, including those with visual impairments.
+   - Provide tooltips or brief explanations for more complex metrics.
+
+## Dashboard Design Principles {.smaller}
+
+#### Resources
+
+- "The Visual Display of Quantitative Information" by Edward Tufte
+   A classic, emphasizing clarity, precision, and efficiency in visualizing data.
+
+- "Storytelling with Data: A Data Visualization Guide for Business Professionals" by Cole Nussbaumer Knaflic  
+   Practical tips for using data visualization as a communication tool, with a focus on business.
+
+- "Information Dashboard Design: Displaying Data for At-a-Glance Monitoring" by Stephen Few  
+   Guidelines for creating clear and actionable dashboards that allow users to quickly grasp insights.
+   
+- [8 Essential Dashboard Design Principles for Effective Data Visualization](https://medium.com/@mokkup/8-essential-dashboard-design-principles-for-effective-data-visualization-40653c5fd135)
 
 ---
 
-## 2:00 PM - 2:50 PM: Block 5 - Calendar Module
+## Lunch Break
+
+### 12:00 PM - 1:00 PM
 
 ---
 
-## 3:00 PM - 3:50 PM: Block 6 - Advanced Techniques & Final Q&A
+## Calendars in Shiny {.smaller}
+
+  - [{timevis}](https://github.com/daattali/timevis): Allows you to build interactive timelines in Shiny or Quarto. It is based on the 'vis.js' Timeline JavaScript library. 
+
+```{=html}
+<iframe width="1200" height="460" src="https://daattali.com/shiny/timevis-demo/"></iframe>
+```
 
 ---
 
-## 4:00 PM - 5:00 PM: Hands-on Exercises & Project Work
+## CRUD Apps in R and Shiny
+
+### Start with your logical model
+![](images/logical-model.png)
+
+### Design CRUD tables
+![](images/crud_conferences.png){width=12%}
+![](images/crud_teams.png){width=35%}
+![](images/crud_players.png){width=35%}
+
+
+## CRUD Apps in R and Shiny {.smaller}
+
+- Use {rhandsontable}, {reactable}, or {DT} to display selectable/editable tables
+- Control user submissions through `shiny::actionButton`s
+- Validate user input using functions, such as `shiny::req`, `shiny::validate`, `shinyfeedback::feedback`, and `shiny::showNotification`
+- A CRUD app could have the following key steps:
+    1. Read in data
+    2. Join and transform data into user table(s), using a function
+    3. Make your user table to a reactive object, using `reactiveValues`
+    4. Upon user submission, there are two subprocesses:
+    
+    - Transform submission back into original raw table structure, using a function, then write to data
+    - Update your reactive user table with submission
+
+---
+
+## Advanced Techniques & Final Q&A 
+
+---
+
+## Hands-on Exercises & Project Work
 
 ---
 

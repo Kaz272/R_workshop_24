@@ -1,6 +1,4 @@
-library(reactable)
-library(timevis)
-library(ggmap)
+
 calendar_ui <- function(id) {
   
   ns <- NS(id)
@@ -8,7 +6,7 @@ calendar_ui <- function(id) {
   tabItem(tabName = "calendar",
           fluidRow(
             timevisOutput(ns("calendar"), width = "100%"),
-            box(width = 6,
+            box(width = 8,
                 uiOutput(ns("game_details"))
             )
           )

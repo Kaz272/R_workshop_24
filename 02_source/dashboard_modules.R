@@ -1,4 +1,3 @@
-library(DT)
 
 dashboard_ui <- function(id) {
   

@@ -1,4 +1,4 @@
-library(rhandsontable)
+
 crud_ui <- function(id) {
   
   ns <- NS(id)
@@ -134,28 +134,28 @@ crud_server <- function(id) {
       
     build_team_input_box <- function(selected_team_record, edit = T){
       
-      header <- ifelse(test = edit, 
-                       yes = paste0("Edit ", selected_team_record$`Team Name`, selected_team_record$team_id),
-                       no = "Add New Team")
-      
-      default_name <- ifelse(test = edit,
-                             yes = selected_team_record$`Team Name`,
-                             no = "")
-      
-      default_color <- ifelse(test = edit, 
-                              yes = selected_team_record$`Team Color`,
-                              no = "")
-      
-      default_logo <- ifelse(test = edit, 
-                             yes = selected_team_record$`Logo Filename`,
-                             no = "")
+      # header <- ifelse(test = edit, 
+      #                  yes = paste0("Edit ", selected_team_record$`Team Name`, selected_team_record$team_id),
+      #                  no = "Add New Team")
+      # 
+      # default_name <- ifelse(test = edit,
+      #                        yes = selected_team_record$`Team Name`,
+      #                        no = "")
+      # 
+      # default_color <- ifelse(test = edit, 
+      #                         yes = selected_team_record$`Team Color`,
+      #                         no = "")
+      # 
+      # default_logo <- ifelse(test = edit, 
+      #                        yes = selected_team_record$`Logo Filename`,
+      #                        no = "")
       
       
       box(width = 12,
         h3(header),
-        textInput(inputId = ns("team_name"), label = "Team Name", value = NULL),
-        textInput(inputId = ns("team_color"), label = "Team Color", value = default_color),
-        textInput(inputId = ns("logo_filename"), label = "Team Logo Filepath", value = default_logo),
+        textInput(inputId = ns("team_name"), label = "Team Name", value = selected_team_record$`Team Name`),
+        textInput(inputId = ns("team_color"), label = "Team Color", value = selected_team_record$`Team Color`),
+        textInput(inputId = ns("logo_filename"), label = "Team Logo Filepath", value = selected_team_record$`Logo Filename`),
         actionButton(inputId = ns("submit_team"), label = "Submit")
       )
     }
@@ -173,6 +173,11 @@ crud_server <- function(id) {
     
     output$team_input_box <- renderUI({
       team_input_box()
+    })
+    
+    observeEvent(input$submit_team, {
+      v$team %>% 
+        case_when(row_number == team_input_box())
     })
       
         output$player_crud <- DT::renderDataTable(

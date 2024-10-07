@@ -197,7 +197,7 @@ Download ZIP from website.
 
 ## Shiny Reactivity {.smaller}
 
-Now, we'll open `R_Workshop/tutorial_reactives/app_reactives.R` and work from there. 
+Now, we'll open `R_Workshop/04_tutorial_reactives/app_reactives.R` and work from there. 
 
 ---
 
@@ -211,7 +211,7 @@ Now, we'll open `R_Workshop/tutorial_reactives/app_reactives.R` and work from th
 ## Functions & Modules in Shiny {.smaller}
 
 
-Now, we'll open `R_Workshop/tutorial_modules/app_modules.R` and work from there. 
+Now, we'll open `R_Workshop/05_tutorial_modules/app_modules.R` and work from there. 
 
 ---
 

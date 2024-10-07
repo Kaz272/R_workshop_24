@@ -195,9 +195,9 @@ Download ZIP from website.
 <iframe width="1000" height="450" src="https://mastering-shiny.org/basic-reactivity.html"></iframe>
 ```
 
-## Shiny Reactivity
+## Shiny Reactivity {.smaller}
 
-Now, we'll open `R_Workshop > tutorial_reactives > app_reactives.R` and work from there. 
+Now, we'll open `R_Workshop/tutorial_reactives/app_reactives.R` and work from there. 
 
 ---
 
@@ -208,9 +208,10 @@ Now, we'll open `R_Workshop > tutorial_reactives > app_reactives.R` and work fro
 <iframe width="1000" height="450" src="https://mastering-shiny.org/scaling-functions.html"></iframe>
 ```
 
-## Functions & Modules in Shiny
+## Functions & Modules in Shiny {.smaller}
 
-Now, we'll open `R_Workshop > tutorial_modules > app_modules.R` and work from there. 
+
+Now, we'll open `R_Workshop/tutorial_modules/app_modules.R` and work from there. 
 
 ---
 
@@ -314,6 +315,8 @@ Effective dashboard design ensures that the audience can quickly absorb critical
 
 
 ## CRUD Apps in R and Shiny {.smaller}
+
+Check out `R_workshop > app.R`
 
 - Use {rhandsontable}, {reactable}, or {DT} to display selectable/editable tables
 - Control user submissions through `shiny::actionButton`s

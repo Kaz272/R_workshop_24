@@ -9,7 +9,6 @@ source(here::here("02_source", "dashboard_modules.R"))
 ## Header --------------------------------
 header <- dashboardHeader(title = "WNBA Dashboard")
 
-
 ## Sidebar -------------------------------
 sidebar <- dashboardSidebar(
   sidebarMenu(

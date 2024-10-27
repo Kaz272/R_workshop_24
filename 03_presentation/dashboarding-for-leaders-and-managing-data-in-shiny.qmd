@@ -179,6 +179,90 @@ Download ZIP from website.
 <iframe width="1000" height="450" src="https://mastering-shiny.org/basic-reactivity.html"></iframe>
 ```
 
+<!-- ## Reactive Functions -->
+
+<!-- :::{.panel-tabset} -->
+
+<!-- ## [What are they? (1 of 2)]{style="font-size: 30px;"} -->
+
+<!-- ::: condensed -->
+<!-- `reactiveVal()` to set a single reactive value -->
+
+<!-- ```{r eval=FALSE,echo=TRUE} -->
+<!-- v <- shiny::reactiveVal(0) -->
+<!-- v()  # 0 -->
+<!-- v(2) # 2 -->
+<!-- ``` -->
+
+<!-- <br> -->
+
+<!-- `reactiveValues()` to create an object for storing (multiple) reactive values -->
+
+<!-- ```{r eval=FALSE,echo=TRUE} -->
+<!-- v <- shiny::reactiveValues(item1 = "abc", item2 = tibble()) -->
+<!-- v$item1 # "abc" -->
+<!-- v$item2 # A tibble: 0 × 0 -->
+
+<!-- v$item1 <- "Go Army!" -->
+<!-- ``` -->
+<!-- ::: -->
+
+<!-- ## [What are they? (2 of 2)]{style="font-size: 30px;"} -->
+
+<!-- ::: condensed -->
+
+<!-- `reactive({})` to create reactive expressions -->
+
+<!-- ```{r eval=FALSE,echo=TRUE} -->
+<!-- reactive_table <- reactive({head(mtcars, input$number)}) -->
+<!-- ``` -->
+
+<!-- <br> -->
+
+<!-- `eventReactive({})` and `observeEvent({})` to handle events (e.g., button click, input selected) -->
+
+<!-- ```{r eval=FALSE,echo=TRUE} -->
+<!-- reactive_string <- shiny::eventReactive(input$button, { -->
+<!--   paste0("user selected ", input$selection) -->
+<!-- }) -->
+<!-- reactive_string() # "user selected APPLES" -->
+
+<!-- observeEvent(input$button, { -->
+<!--   write_csv(x = v$item2, file = "file_name.csv") -->
+<!-- }) -->
+
+<!-- ``` -->
+
+<!-- ::: -->
+
+<!-- ## [Example]{style="font-size: 30px;"} -->
+
+<!-- ::: condensed -->
+<!-- ```{r eval=FALSE, echo=TRUE} -->
+<!-- v <- reactiveValues(ingredients = read_latest_ingredients_file(), -->
+<!--                     staples = read_latest_staples_file()) -->
+
+<!-- ingredients_category <- reactive({ -->
+<!--   v$ingredients %>% -->
+<!--     filter(Category != "") %>% -->
+<!--     pull(Category) %>% -->
+<!--     unique() -->
+<!--   }) -->
+
+<!-- output$ingredient_edit_table <- renderRHandsontable({ -->
+<!--   rhandsontable(v$ingredients) %>% -->
+<!--     hot_col("Category", source = category()) -->
+<!-- }) -->
+
+<!-- v$ingredients <- eventReactive(input$submit_ingredients, { -->
+<!--      hot_to_r(input$ingredient_edit_table) -->
+<!--   }) -->
+
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::: -->
+
+
 ## Shiny Reactivity {.smaller}
 
 Now, we'll open `R_Workshop/04_tutorial_reactives/app_reactives.R` and work from there.

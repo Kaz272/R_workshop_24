@@ -56,12 +56,12 @@ server <- function(input, output, session) {
   # follow the reactive graph, in our output, we have team_info_ui(); in team_info_ui(), we use v$team  
   
   ## reactive --------------------------------
-  team_info_ui <- reactive(h3(paste("You selected", v$team[1])))
+  team_info_ui <- reactive(h3(paste("You selected: ", paste0(v$team, collapse = ", "))))
   
   ## reactiveValues ---------------------------
   v <- reactiveValues(
-    team = NULL,
-    ) # with reactiveValues, you must have a hard coded starting value
+    team = c()
+  ) # with reactiveValues, you must have a hard coded starting value
   
   ## reactive --------------------------------
   team_data <- reactive({ 
@@ -100,12 +100,13 @@ server <- function(input, output, session) {
                 pagination = F)
     
     #Build the UI
-    ui <- box(width =2, height = '500px', title = h2(team_name), #arguments standard within box
+    ui <- box(width =4, height = '500px', title = h2(team_name), #arguments standard within box
               team_stats
     )
     
     return(ui)
   } # end build_stat_ui
+  
   
   output$single_team_stats_box <- renderUI({
     team_data() |> 

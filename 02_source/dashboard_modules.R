@@ -27,7 +27,7 @@ dashboard_ui <- function(id) {
               )
           ),
           box(title = "Last Week's Scoreboard", width = 3, # box on right with recent games & scores
-              uiOutput(outputId = ns("recent_games")),
+              uiOutput(outputId = ns("recent_games"))
           ),
           uiOutput(ns("news")) # all the news headlines below the bar chart
   ) 
@@ -89,9 +89,9 @@ dashboard_server <- function(id) {
       # Build team value boxes 
       output$team_snapshot <- renderUI({
         tagList( 
-          valueBox(value = team_snapshot_values()$wins, color = 'blue', subtitle = "Wins", width = 4),
+          valueBox(value = team_snapshot_values()$wins, color = 'lightblue', subtitle = "Wins", width = 4),
           valueBox(value = team_snapshot_values()$losses, color = 'maroon', subtitle = "Losses", width = 4),
-          valueBox(value = team_snapshot_values()$win_loss_perc, color = 'blue', subtitle = "Win-Loss %", width = 4)
+          valueBox(value = team_snapshot_values()$win_loss_perc, color = 'lightblue', subtitle = "Win-Loss %", width = 4)
         )
       })
       
@@ -198,7 +198,7 @@ dashboard_server <- function(id) {
                                    alt = title,
                                    width = '100%'),
                           p(description)
-                        ),
+                        )
         )
         return(news_box)
       }

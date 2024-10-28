@@ -20,6 +20,7 @@ sidebar <- dashboardSidebar(
 
 ## Body ----------------------------------
 body <- dashboardBody(
+  map(list.files('www/css', pattern = "*.css"), function(file) includeCSS(file.path('www', 'css', file))),
   tabItems(
     ### Calling module UI functions ----------------------------
     dashboard_ui("dashboard"),

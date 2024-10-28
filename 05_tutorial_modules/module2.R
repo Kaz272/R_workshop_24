@@ -21,7 +21,7 @@ module2_server <- function(id, input_sum) {
           )
         )
       
-      output$statement_output <- renderUI({statement()})
+      output$statement_output <- renderUI(statement())
     }
     
   )

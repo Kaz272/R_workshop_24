@@ -25,6 +25,7 @@ sidebar <- dashboardSidebar(
 
 ## Body ----------------------------------
 body <- dashboardBody(
+  map(list.files('../www/css', pattern = "*.css"), function(file) includeCSS(file.path('../www', 'css', file))),
   selectInput(inputId = "team", label = "Select Team", choices = unique_teams, multiple = T ),
   box(width = 12,
       uiOutput("team_info")
@@ -55,7 +56,7 @@ server <- function(input, output, session) {
   })
   # follow the reactive graph, in our output, we have team_info_ui(); in team_info_ui(), we use v$team  
   
-  ## reactive --------------------------------
+  ## reactive -------------------------------- %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% 
   team_info_ui <- reactive(h3(paste("You selected: ", paste0(v$team, collapse = ", "))))
   
   ## reactiveValues ---------------------------

@@ -12,7 +12,7 @@ crud_ui <- function(id) {
                      fluidPage(
                        rHandsontableOutput(ns("conf_crud"))
                      ) # end fluidPage
-                     ), # end tabPanel
+            ), # end tabPanel
             tabPanel("Teams",
                      fluidPage(
                        column(width = 8,
@@ -22,14 +22,14 @@ crud_ui <- function(id) {
                               uiOutput(ns("team_input_box"))
                        )
                      )# end fluidPage
-                     ), # end tabPanel
+            ), # end tabPanel
             tabPanel("Players",
                      fluidPage(
                        dataTableOutput(ns("player_crud"))
                      )# end fluidPage
-                     ) # end tabPanel
-            )# end navbarPage
-          ) # end tabItem
+            ) # end tabPanel
+          )# end navbarPage
+  ) # end tabItem
 }
 
 crud_server <- function(id) {
@@ -112,45 +112,47 @@ crud_server <- function(id) {
       #           conf = prepped_conf)
       
       # RHandsonTable ---------------------------------
-        output$conf_crud <- renderRHandsontable(
-          v$conf %>% 
-            rhandsontable(width = '250px')
-        )
+      output$conf_crud <- renderRHandsontable(
+        v$conf %>% 
+          rhandsontable(width = '250px')
+      )
       
       # Reactable ---------------------------------  
       output$team_crud <- renderReactable(
         v$team %>% 
-         reactable(
-          columns = list(
-            `Team Color` = colDef(
-              style = function(value) {
-                color <- value
-                list(background = color)
-              }
-            )
-          ),
-          pagination = F,
-          outlined = T,
-          selection = 'single'
-        )
+          reactable(
+            columns = list(
+              `Team Color` = colDef(
+                style = function(value) {
+                  color <- value
+                  list(background = color)
+                }
+              )
+            ),
+            pagination = F,
+            outlined = T,
+            selection = 'single'
+          )
       )
       
       # Display team information --------------------------
-    build_team_input_box <- function(selected_team_record=list(), edit = T){
-      
-      header <- ifelse(test = edit,
-                       yes = paste0("Edit ", selected_team_record$`Team Name`, selected_team_record$team_id),
-                       no = "Create New Team")
-      message(header)
-      
-      box(width = 12,
-        h3(header),
-        textInput(inputId = ns("team_name"), label = "Team Name", value = selected_team_record$`Team Name`),
-        textInput(inputId = ns("team_color"), label = "Team Color", value = selected_team_record$`Team Color`),
-        textInput(inputId = ns("logo_filename"), label = "Team Logo Filepath", value = selected_team_record$`Logo Filename`),
-        actionButton(inputId = ns("submit_team"), label = "Submit")
-      )
-    }
+      build_team_input_box <- function(selected_team_record=list(), edit = T){
+        header <- ifelse(test = edit,
+                         yes = paste0("Edit ", selected_team_record$`Team Name`, selected_team_record$team_id),
+                         no = "Create New Team")
+        message(header)
+        
+        if(!is.null(selected_team_record$`Team Color`)) colorChoice <- selected_team_record$`Team Color`
+        else colorChoice <- '#fff'
+        
+        box(width = 12,
+            h3(header),
+            textInput(inputId = ns("team_name"), label = "Team Name", value = selected_team_record$`Team Name`),
+            colorPickr(inputId = ns("team_color"), label = "Team Color", selected = colorChoice),
+            textInput(inputId = ns("logo_filename"), label = "Team Logo Filepath", value = selected_team_record$`Logo Filename`),
+            actionButton(inputId = ns("submit_team"), label = "Submit")
+        )
+      }
       
       team_input_box <-reactive({
         
@@ -159,27 +161,44 @@ crud_server <- function(id) {
         if(is.null(selected_row)){
           build_team_input_box(edit = F)
         }else{
-        message(paste("User selected", getReactableState("team_crud", "selected")))
-        
-        v$team %>% 
-          slice(selected_row) %>% 
-          build_team_input_box(edit = T)
+          message(paste("User selected", getReactableState("team_crud", "selected")))
+          
+          v$team %>% 
+            slice(selected_row) %>% 
+            build_team_input_box(edit = T)
         }
       })
       
-  
-    output$team_input_box <- renderUI({
-      team_input_box()
-    })
-    
-    observeEvent(input$submit_team, {
-     })
       
-    # DT::DataTable ------------------------------
-        output$player_crud <- DT::renderDataTable(
-          v$player %>% 
-            datatable(selection = 'single')
+      output$team_input_box <- renderUI({
+        team_input_box()
+      })
+      
+      observeEvent(input$submit_team, {
+        
+        ogData <- transform_to_orig_team(v$team)$team_stat_orig 
+        if(!(input$team_name %in% ogData$team_name)) ogData %<>% add_row(
+          team_id=max(.$team_id)+1, 
+          team_name = input$team_name,
+          team_logo_filename = input$logo_filename,
+          color_hex = input$team_color
+          )
+        else ogData %<>% mutate(
+          color_hex = case_when(
+           team_name == input$team_name ~input$team_color, T ~color_hex
+          ),
+          team_logo_filename = case_when(
+            team_name == input$team_name ~input$logo_filename, T ~team_logo_filename
+          )
         )
+        v$team <- transform_to_vis_team(ogData)
+      })
+      
+      # DT::DataTable ------------------------------
+      output$player_crud <- DT::renderDataTable(
+        v$player %>% 
+          datatable(selection = 'single')
+      )
       
     } #end module function
   ) # end moduleServer
@@ -189,7 +208,7 @@ crud_server <- function(id) {
 
 transform_to_vis_team <- function(team_stats_orig){
   # team_stats_vis <- 
-  team_stats |> 
+  team_stats_orig |> 
     distinct(team_id, team_name, team_logo_filename, color_hex) |> # Just using these columns for demonstration purposes
     head(100) |> # this is just for demonstration purposes
     left_join(team_conference_xwalk, by = c("team_name" = "displayName")) |> 
@@ -203,7 +222,7 @@ transform_to_vis_team <- function(team_stats_orig){
 
 transform_to_orig_team <- function(team_stats_vis){
   team_stat_orig <- 
-    team_stat_vis %>% 
+    team_stats_vis %>% 
     select(team_id, 
            team_name=`Team Name`, 
            team_logo_filename=`Logo Filename`,

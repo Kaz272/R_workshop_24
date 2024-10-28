@@ -4,11 +4,12 @@ library(reactable)
 library(timevis)
 library(shiny)
 options(dplyr.summarise.inform = FALSE)
-library(shinydashboard)
+library(bs4Dash)
 library(tidyverse)
 library(here)
 library(shinyWidgets)
 library(DT)
+library(magrittr)
 # also need data.table
 
 # Read in Data ---------------------

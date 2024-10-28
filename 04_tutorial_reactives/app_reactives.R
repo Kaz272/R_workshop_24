@@ -114,11 +114,6 @@ server <- function(input, output, session) {
       build_stat_ui()
   })
   
-  # output$multiple_team_stats_boxes <- renderUI({
-  #   league_stats %>% 
-  #     group_split(team_id) %>% 
-  #     purrr::map(build_stat_ui)
-  # })
   output$multiple_team_stats_boxes <- renderUI({
     team_data() %>% 
       group_split(team_id) %>% 

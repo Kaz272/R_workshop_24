@@ -1,0 +1,13 @@
+name: R_workshop
+title: R_workshop
+username: maxinedrake
+account: maxinedrake
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 13147682
+bundleId: 9277793
+url: https://maxinedrake.shinyapps.io/R_workshop/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: 00_data_operations/get_wnba_data.R|04_tutorial_reactives/app_reactives.R|05_tutorial_modules/app_modules.R|05_tutorial_modules/module1.R|05_tutorial_modules/module2.R|06_tutorial_other_styles/app_another_style.R|03_presentation

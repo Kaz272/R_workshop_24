@@ -2,6 +2,7 @@
 crud_ui <- function(id) {
   
   ns <- NS(id)
+  # ns <- NS("crud")
   
   tabItem(tabName = "crud",
           # rHandsontableOutput(ns("rhandsontable")),
@@ -110,11 +111,13 @@ crud_server <- function(id) {
       #           player = prepped_player,
       #           conf = prepped_conf)
       
+      # RHandsonTable ---------------------------------
         output$conf_crud <- renderRHandsontable(
           v$conf %>% 
             rhandsontable(width = '250px')
         )
-        
+      
+      # Reactable ---------------------------------  
       output$team_crud <- renderReactable(
         v$team %>% 
          reactable(
@@ -132,24 +135,13 @@ crud_server <- function(id) {
         )
       )
       
-    build_team_input_box <- function(selected_team_record, edit = T){
+      # Display team information --------------------------
+    build_team_input_box <- function(selected_team_record=list(), edit = T){
       
-      # header <- ifelse(test = edit, 
-      #                  yes = paste0("Edit ", selected_team_record$`Team Name`, selected_team_record$team_id),
-      #                  no = "Add New Team")
-      # 
-      # default_name <- ifelse(test = edit,
-      #                        yes = selected_team_record$`Team Name`,
-      #                        no = "")
-      # 
-      # default_color <- ifelse(test = edit, 
-      #                         yes = selected_team_record$`Team Color`,
-      #                         no = "")
-      # 
-      # default_logo <- ifelse(test = edit, 
-      #                        yes = selected_team_record$`Logo Filename`,
-      #                        no = "")
-      
+      header <- ifelse(test = edit,
+                       yes = paste0("Edit ", selected_team_record$`Team Name`, selected_team_record$team_id),
+                       no = "Create New Team")
+      message(header)
       
       box(width = 12,
         h3(header),
@@ -159,33 +151,35 @@ crud_server <- function(id) {
         actionButton(inputId = ns("submit_team"), label = "Submit")
       )
     }
-    
-    team_input_box <- reactive({
-      selected_row <- req(getReactableState("team_crud", "selected")) # this gives me the row number of the visualized reactable
       
-      message(paste("User selected", getReactableState("team_crud", "selected")))
+      team_input_box <-reactive({
+        
+        selected_row  <- getReactableState("team_crud", "selected") # this gives me the row number of the visualized reactable
+        
+        if(is.null(selected_row)){
+          build_team_input_box(edit = F)
+        }else{
+        message(paste("User selected", getReactableState("team_crud", "selected")))
+        
+        v$team %>% 
+          slice(selected_row) %>% 
+          build_team_input_box(edit = T)
+        }
+      })
       
-      v$team %>% 
-        slice(selected_row) %>% 
-        build_team_input_box(edit = T)
-    })
-    
-    
+  
     output$team_input_box <- renderUI({
       team_input_box()
     })
     
     observeEvent(input$submit_team, {
-      v$team %>% 
-        case_when(row_number == team_input_box())
-    })
+     })
       
+    # DT::DataTable ------------------------------
         output$player_crud <- DT::renderDataTable(
           v$player %>% 
             datatable(selection = 'single')
         )
-        
-      
       
     } #end module function
   ) # end moduleServer
@@ -222,6 +216,7 @@ transform_to_orig_team <- function(team_stats_vis){
   
   return(list(team_stat_orig=team_stat_orig,
               team_conf_xwalk=team_conf_xwalk))
+  # returns original dataframe ready to write back to origin data
 }
 
 

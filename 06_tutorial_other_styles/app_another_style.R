@@ -25,7 +25,7 @@ example_theme <- bs_theme(
 # Define UI for application that draws a histogram
 ui <- navbarPage( 
   "App Title",   
-  theme = custom_theme,
+  theme = example_theme,
   tabPanel("panel 1", 
            fluidPage(
              h1("Header 1"),
@@ -50,18 +50,6 @@ ui <- navbarPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
   
-    # 
-    # 
-    # output$distPlot <- renderPlot({
-    #     # generate bins based on input$bins from ui.R
-    #     x    <- faithful[, 2]
-    #     bins <- seq(min(x), max(x), length.out = input$bins + 1)
-    # 
-    #     # draw the histogram with the specified number of bins
-    #     hist(x, breaks = bins, col = 'darkgray', border = 'white',
-    #          xlab = 'Waiting time to next eruption (in mins)',
-    #          main = 'Histogram of waiting times')
-    # })
 }
 
 # Run the application 

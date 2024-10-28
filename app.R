@@ -44,6 +44,8 @@ server <- function(input, output, session) {
   calendar_server("calendar")
   crud_server("crud")
   
+  print(session$user)
+  
   ## Menu -----------------------
   output$menu <- renderMenu({
     
@@ -52,3 +54,4 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui, server)
+
